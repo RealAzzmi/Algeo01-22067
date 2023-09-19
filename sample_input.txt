@@ -1,0 +1,12 @@
+x - y = -1
+2x + y = 10
+
+(x, y) = (3, 4)
+
+
+Sample inputnya augmented matrix
+
+
+2 3
+1 -1 -1
+2 1 10
