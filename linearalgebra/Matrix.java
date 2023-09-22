@@ -96,7 +96,7 @@ public class Matrix {
     public void transpose(){
         //diasumsikan matriks persegi
         for (int i =0; i<this.row()-1;i++){
-            for(int j =i+1;j<this.col()-1;j++){
+            for(int j =i+1;j<this.col();j++){
                 double temp = this.matrix[i][j];
                 this.matrix[i][j]=this.matrix[j][i];
                 this.matrix[i][j]= temp;
