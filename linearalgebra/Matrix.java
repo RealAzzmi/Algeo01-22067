@@ -71,10 +71,33 @@ public class Matrix {
 
     }
 
-
     public double determinantByCofactor(Matrix m) {
-        return 0;
+        int n = m.matrix.length;
+        if (n == 1) {
+            return m.matrix[0][0];
+        }
+        if (n == 2) {
+            return m.matrix[0][0] * m.matrix[1][1] - m.matrix[0][1] * m.matrix[1][0];
+        }
+
+        double det = 0;
+        for (int i = 0; i < n; i++) {
+            Matrix subMatrix = new Matrix(n - 1, n - 1);
+            for (int j = 1; j < n; j++) {
+                int subCol = 0;
+                for (int k = 0; k < n; k++) {
+                    if (k == i) {
+                        continue;
+                    }
+                    subMatrix.matrix[j - 1][subCol++] = m.matrix[j][k];
+                }
+            }
+            int sign = (i % 2 == 0) ? 1 : -1;
+            det += sign * m.matrix[0][i] * determinantByCofactor(subMatrix);
+        }
+        return det;
     }
+
     public double determinantByReduction() {
         return 0;
     }
@@ -93,6 +116,7 @@ public class Matrix {
         tempMatrix.transpose();
         return tempMatrix;
     }
+
     public void transpose(){
         //diasumsikan matriks persegi
         for (int i =0; i<this.row()-1;i++){
@@ -123,6 +147,7 @@ public class Matrix {
             }
         return mMinor;
     }
+    
     public void print() {
         for (int i = 0; i < this.row(); ++i) {
             for (int j = 0; j < this.col(); ++j) {
