@@ -71,6 +71,18 @@ public class Matrix {
 
     }
 
+    public Matrix multiplyByNum(double num) {
+        Matrix result = new Matrix(this.row(), this.col());
+
+        for (int i = 0; i < this.row(); i++) {
+            for (int j = 0; j < this.col(); j++) {
+                result.matrix[i][j] = this.matrix[i][j] * num;
+            }
+        }
+
+        return result;
+    }
+
     public double determinantByCofactor(Matrix m) {
         int n = m.matrix.length;
         if (n == 1) {
@@ -102,10 +114,6 @@ public class Matrix {
         return 0;
     }
 
-    public Matrix inverse() {
-        return new Matrix(0, 0);
-    }
-
     public Matrix adjoint(Matrix original) {
         Matrix tempMatrix = new Matrix(original.row(),original.col());
         for(int i =0;i<original.row();i++){
@@ -115,6 +123,21 @@ public class Matrix {
         }
         tempMatrix.transpose();
         return tempMatrix;
+    }
+
+    public Matrix inverse(Matrix m) {
+        // Pre kondisi : Matriks harus matriks persegi
+        double det = determinantByCofactor(m);
+
+        if(det == 0){
+            // Matriks tidak punya invers
+            return null;
+        }
+        else{
+            Matrix adjoint = adjoint(m);
+            Matrix inverseMatrix = adjoint.multiplyByNum(1.0/det);
+            return inverseMatrix;
+        }
     }
 
     public void transpose(){
@@ -147,7 +170,7 @@ public class Matrix {
             }
         return mMinor;
     }
-    
+
     public void print() {
         for (int i = 0; i < this.row(); ++i) {
             for (int j = 0; j < this.col(); ++j) {
