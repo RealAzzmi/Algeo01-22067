@@ -71,7 +71,8 @@ public class Matrix {
 
     }
 
-    public double determinantByCofactor() {
+
+    public double determinantByCofactor(Matrix m) {
         return 0;
     }
     public double determinantByReduction() {
@@ -82,12 +83,45 @@ public class Matrix {
         return new Matrix(0, 0);
     }
 
-    public Matrix adjoint() {
-        return new Matrix(0, 0);
+    public Matrix adjoint(Matrix original) {
+        Matrix tempMatrix = new Matrix(original.row(),original.col());
+        for(int i =0;i<original.row();i++){
+            for(int j=0;j<original.col();j++){
+                tempMatrix.matrix[i][j]= Math.pow(-1,i+ j)*determinantByCofactor(minor(original, i, j));
+            }
+        }
+        tempMatrix.transpose();
+        return tempMatrix;
+    }
+    public void transpose(){
+        //diasumsikan matriks persegi
+        for (int i =0; i<this.row()-1;i++){
+            for(int j =i+1;j<this.col()-1;j++){
+                double temp = this.matrix[i][j];
+                this.matrix[i][j]=this.matrix[j][i];
+                this.matrix[i][j]= temp;
+            }
+        }
     }
 
-    public Matrix cofactor(int row, int col) {
-        return new Matrix(0, 0);
+    public static Matrix minor(Matrix original, int col,int row) {
+        Matrix mMinor = new Matrix(original.row()-1, original.col()-1);
+        int x=0;    
+        for(int i=0;i<original.row();i++){
+                if(i==row){
+                    x=1;
+                    continue;
+                }
+                int y =0;
+                for(int j=0;j<original.col();j++){
+                    if(j==col){
+                        y=1;
+                        continue;
+                    }
+                    mMinor.matrix[i-x][j-y] = original.matrix[i][j];
+                }
+            }
+        return mMinor;
     }
     public void print() {
         for (int i = 0; i < this.row(); ++i) {

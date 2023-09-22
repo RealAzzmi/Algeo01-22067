@@ -10,3 +10,8 @@ Sample inputnya augmented matrix
 2 3
 1 -1 -1
 2 1 10
+
+3 3
+1 -1 -1
+2 1 10
+1 2 1

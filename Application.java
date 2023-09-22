@@ -17,6 +17,9 @@ public class Application {
                 augMatrix.matrix[i][j] = input.nextDouble();
             }
         }
+        Matrix minor = Matrix.minor(augMatrix,0,0);
+        
+        minor.print();
 
         LinearSystem ls = new LinearSystem(augMatrix);
         // ls.augmentedMatrix.print();
