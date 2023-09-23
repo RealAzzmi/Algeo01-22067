@@ -63,9 +63,42 @@ public class LinearSystem {
     public Matrix gauss() {
         return new Matrix(0, 0);
     }
-    
+
     public Matrix cramer() {
-        return new Matrix(0, 0);
+        int nCoeff = this.augmentedMatrix.row();
+
+        // Inisialisasi matriks koefisien, konstanta, dan hasil
+        Matrix coeff = new Matrix(nCoeff, nCoeff);
+        Matrix constant = new Matrix(nCoeff, 1);
+        Matrix result = new Matrix(nCoeff, 1);
+
+        // Memisahkan matriks koefisien dan konstanta
+        for (int i = 0; i < nCoeff; i++) {
+            for (int j = 0; j < nCoeff; j++) {
+                coeff.matrix[i][j] = this.augmentedMatrix.matrix[i][j];
+            }
+            constant.matrix[i][0] = this.augmentedMatrix.matrix[i][nCoeff];
+        }
+
+        // Determinan matriks koefisien
+        double detCoeff = coeff.determinantByCofactor(coeff);
+
+        if (detCoeff == 0) {
+            // Metode cramer tidak dapat digunakan karena determinan matriks koefisien adalah nol
+            return null;
+        }
+
+        // Menyelipkan matriks konstanta ke matriks koefisien lalu menghitung pembagian determinannya dan disimpan di matriks result
+        for (int i = 0; i < nCoeff; i++) {
+            Matrix modifiedCoeff = Matrix.deepCopy(coeff);
+            for (int j = 0; j < nCoeff; j++) {
+                modifiedCoeff.matrix[j][i] = constant.matrix[j][0];
+            }
+            double detModified = modifiedCoeff.determinantByCofactor(modifiedCoeff);
+            result.matrix[i][0] = detModified / detCoeff;
+        }
+
+        return result;
     }
 
 }
