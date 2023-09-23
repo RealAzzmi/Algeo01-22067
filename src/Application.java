@@ -30,6 +30,9 @@ public class Application {
         Matrix solution = ls.gaussJordan();
         solution.print();
 
+        Matrix cramerMatrix = ls.cramer();
+        cramerMatrix.print();
+
         input.close();
     }
 }
