@@ -2,7 +2,6 @@ package linearalgebra;
 
 public class Matrix {
     public double[][] matrix;
-
     public Matrix(int row, int col) {
         this.matrix = new double[row][col];
     }
@@ -109,9 +108,64 @@ public class Matrix {
         }
         return det;
     }
-
-    public double determinantByReduction() {
-        return 0;
+    public  boolean isLowerTriangular(Matrix m){
+        if (m.row()< 2){
+        return false;
+        }
+        for (int i = 0; i < m.row(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (m.matrix[i][j] != 0){
+                    return false;
+            }
+        }
+    }
+    return true;
+    }
+    public  boolean isUpperTriangular(Matrix m){
+        if (m.row()< 2){
+        return false;
+        }
+        for(int i = 0; i < m.row(); i++) {
+            for (int j = i+1; j < m.col(); j++) {
+                if (m.matrix[i][j] != 0){
+                    return false;
+            }
+        }
+    }
+    return true;
+    }
+    public  double determinantByReduction(Matrix m) {
+        if(isUpperTriangular(m) || isLowerTriangular(m)){
+            double det =1;
+            for(int i =0;i<m.row();i++){
+                det=det* m.matrix[i][i];
+            }
+            return det;
+        }else{
+            double det = 1;
+            for(int j = 0; j<m.col();j++){
+                for(int i = m.row() - 1; i >= j; i--) {
+                    for (int k = m.matrix.length - 1; k >= j; k--) {
+                        double tmp1 =m.matrix[i][j];
+                        double tmp2 =m.matrix[k][j];
+                        if(Math.abs(tmp1) < Math.abs(tmp2)){
+                            m.swapRow(i, k);
+                            det= det*-1;
+                        }
+                    }
+                }
+                for(int l=this.row()-1; j>l ;j--){
+                    if(m.matrix[l][j]==0){
+                        continue;
+                }
+                subtractRowFromRow(l, l-1, m.matrix[l+1][j]/m.matrix[l][j]);
+            }
+        }
+        for(int i=0;i<m.col();i++){
+            det= det*m.matrix[i][i];
+        }
+        return det;
+        }
     }
 
     public Matrix adjoint(Matrix original) {
