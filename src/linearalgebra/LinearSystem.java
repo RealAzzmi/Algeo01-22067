@@ -61,7 +61,40 @@ public class LinearSystem {
     }
 
     public Matrix gauss() {
-        return new Matrix(0, 0);
+        Matrix result = Matrix.deepCopy(this.augmentedMatrix);
+
+        // Forward phase (Row echelon)
+        int currentRow = 0;
+        for (int currentColumn = 0; currentColumn < result.col() - 1; ++currentColumn) {
+            int firstRow = currentRow;
+            
+            while (firstRow < result.row() && result.matrix[firstRow][currentColumn] == 0) ++firstRow;
+            if (firstRow >= result.row()) continue;
+
+            result.swapRow(firstRow, currentRow);
+            result.divideRow(currentRow, result.matrix[currentRow][currentColumn]); 
+
+            for (int below = currentRow + 1; below < result.row(); ++below) {
+                if (result.matrix[below][currentColumn] == 0) continue;
+                double multiple = result.matrix[below][currentColumn] / result.matrix[currentRow][currentColumn];
+                result.subtractRowFromRow(below, currentRow, multiple);
+            }
+
+            result.print();
+            System.out.println();
+            System.out.println();
+            ++currentRow;
+        }
+        // Backward substitution
+        Matrix solution = new Matrix(result.row(), 1);
+        for (int row = result.row() - 1; row >= 0; --row) {
+            double x = result.matrix[row][result.col() - 1];
+            for (int col = row + 1; col < result.col() - 1; ++col) {
+                x -= result.matrix[row][col] * solution.matrix[col][0];
+            }
+            solution.matrix[row][0] = x;
+        }
+        return solution;
     }
 
     public Matrix cramer() {
