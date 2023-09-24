@@ -15,3 +15,9 @@ Sample inputnya augmented matrix
 1 -1 -1
 2 1 10
 1 2 1
+
+//testing determinant det:165
+3 3
+0 1 5
+3 -6 9
+2 6 1

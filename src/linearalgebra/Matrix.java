@@ -2,6 +2,7 @@ package linearalgebra;
 
 public class Matrix {
     public double[][] matrix;
+
     public Matrix(int row, int col) {
         this.matrix = new double[row][col];
     }
@@ -82,7 +83,7 @@ public class Matrix {
         return result;
     }
 
-    public double determinantByCofactor(Matrix m) {
+    public static double determinantByCofactor(Matrix m) {
         int n = m.matrix.length;
         if (n == 1) {
             return m.matrix[0][0];
@@ -108,7 +109,7 @@ public class Matrix {
         }
         return det;
     }
-    public  boolean isLowerTriangular(Matrix m){
+    public static boolean isLowerTriangular(Matrix m){
         if (m.row()< 2){
         return false;
         }
@@ -121,7 +122,7 @@ public class Matrix {
     }
     return true;
     }
-    public  boolean isUpperTriangular(Matrix m){
+    public static boolean isUpperTriangular(Matrix m){
         if (m.row()< 2){
         return false;
         }
@@ -134,7 +135,7 @@ public class Matrix {
     }
     return true;
     }
-    public  double determinantByReduction(Matrix m) {
+    public static  double determinantByReduction(Matrix m) {
         if(isUpperTriangular(m) || isLowerTriangular(m)){
             double det =1;
             for(int i =0;i<m.row();i++){
@@ -143,7 +144,7 @@ public class Matrix {
             return det;
         }else{
             double det = 1;
-            for(int j = 0; j<m.col();j++){
+            for(int j = 0; j<m.col()-1;j++){
                 for(int i = m.row() - 1; i >= j; i--) {
                     for (int k = m.matrix.length - 1; k >= j; k--) {
                         double tmp1 =m.matrix[i][j];
@@ -154,11 +155,11 @@ public class Matrix {
                         }
                     }
                 }
-                for(int l=this.row()-1; j>l ;j--){
+                for(int l=m.row()-1; l>j ;l--){
                     if(m.matrix[l][j]==0){
                         continue;
                 }
-                subtractRowFromRow(l, l-1, m.matrix[l+1][j]/m.matrix[l][j]);
+                m.subtractRowFromRow(l, l-1, m.matrix[l][j]/m.matrix[l-1][j]);
             }
         }
         for(int i=0;i<m.col();i++){

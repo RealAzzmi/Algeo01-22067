@@ -18,20 +18,20 @@ public class Application {
             }
         }
         Matrix minor = Matrix.minor(augMatrix,0,0);
-        
         minor.print();
-
-        LinearSystem ls = new LinearSystem(augMatrix);
+        double deter = Matrix.determinantByReduction(augMatrix);
+        System.out.println(deter);
+        System.out.println(Matrix.determinantByCofactor(augMatrix));
+        // LinearSystem ls = new LinearSystem(augMatrix);
         // ls.augmentedMatrix.print();
         // System.out.println();
         // System.out.println();
 
-        ls.gaussJordan();
-        Matrix solution = ls.gaussJordan();
-        solution.print();
-
-        Matrix cramerMatrix = ls.cramer();
-        cramerMatrix.print();
+        // ls.gaussJordan();
+        // Matrix solution = ls.gaussJordan();
+        // solution.print();
+        // Matrix cramerMatrix = ls.cramer();
+        // cramerMatrix.print();
 
         input.close();
     }
