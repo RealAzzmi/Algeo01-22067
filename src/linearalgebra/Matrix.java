@@ -2,11 +2,17 @@ package linearalgebra;
 
 public class Matrix {
     public double[][] matrix;
+    
 
     public Matrix(int row, int col) {
         this.matrix = new double[row][col];
     }
-    
+    public Matrix(double[][] newMatrix){
+        this.matrix = newMatrix;
+    }
+    public void setMatrix(double[][] newMatrix){
+        this.matrix = newMatrix;
+    }
     public int row() {
         return this.matrix.length;
     }
@@ -169,7 +175,7 @@ public class Matrix {
         }
     }
 
-    public Matrix adjoint(Matrix original) {
+    public static Matrix adjoint(Matrix original) {
         Matrix tempMatrix = new Matrix(original.row(),original.col());
         for(int i =0;i<original.row();i++){
             for(int j=0;j<original.col();j++){
@@ -180,7 +186,7 @@ public class Matrix {
         return tempMatrix;
     }
 
-    public Matrix inverse(Matrix m) {
+    public static Matrix inverse(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
         double det = determinantByCofactor(m);
 
@@ -194,6 +200,7 @@ public class Matrix {
             return inverseMatrix;
         }
     }
+    
 
     public void transpose(){
         //diasumsikan matriks persegi
@@ -225,6 +232,7 @@ public class Matrix {
             }
         return mMinor;
     }
+    
 
     public void print() {
         for (int i = 0; i < this.row(); ++i) {
@@ -233,5 +241,19 @@ public class Matrix {
             }
             System.out.println();
         }
+    }
+    public static Matrix multiplyMatrix(Matrix m1,Matrix m2){
+        //prekondisi kolom m1 dan baris m2 sama
+        Matrix m3 = new Matrix(m1.row(),m2.col());
+        for(int i =0 ;i<m1.row();i++){
+            for(int j=0;j<m2.col();j++){
+                m3.matrix[i][j]=0;
+                for(int k=0;k<m1.col();k++){
+                    m3.matrix[i][j]+=m1.matrix[i][k]*m2.matrix[k][j];
+                }
+            }
+        }
+        return m3;
+
     }
 }
