@@ -10,7 +10,7 @@ public class Regression {
         this.inputMatrix = inputMatrix;
     }
 
-    public void calculateRegression() {
+    public Matrix calculateRegression() {
         int row_count = inputMatrix.row();
         int col_count = inputMatrix.col();
 
@@ -40,11 +40,10 @@ public class Regression {
         LinearSystem ls = new LinearSystem(regMatrix);
         Matrix solution = ls.gauss();
 
-        System.out.println("Persamaan regresi adalah:");
-        printRegressionEquation(solution);
+        return solution;
     }
 
-    private void printRegressionEquation(Matrix solution) {
+    public void printRegressionEquation(Matrix solution) {
         int n = solution.row() - 1;
         StringBuilder equation = new StringBuilder("y = ");
     
@@ -60,6 +59,22 @@ public class Regression {
         }
     
         System.out.println(equation.toString());
+    }
+
+    public static double estimateY(Matrix coefficients, Matrix inputMatrix) {
+        int n = coefficients.row() - 1;
+        double y = 0;
+
+        for (int i = 0; i <= n; ++i) {
+            double coefficient = coefficients.matrix[i][0];
+            if (i == 0) {
+                y += coefficient;
+            } else {
+                y += coefficient * inputMatrix.matrix[i - 1][0];
+            }
+        }
+
+        return y;
     }
     
 }
