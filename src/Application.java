@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.sound.sampled.Line;
+
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
 
@@ -17,11 +19,17 @@ public class Application {
                 augMatrix.matrix[i][j] = input.nextDouble();
             }
         }
-        Matrix minor = Matrix.minor(augMatrix,0,0);
-        minor.print();
-        double deter = Matrix.determinantByReduction(augMatrix);
-        System.out.println(deter);
-        System.out.println(Matrix.determinantByCofactor(augMatrix));
+        Matrix constant = new Matrix(row_count,1);
+        for(int i =0;i<row_count;i++){
+            constant.matrix[i][0] = input.nextDouble();
+        }
+        // Matrix minor = Matrix.minor(augMatrix,0,0);
+        // minor.print();
+        // double deter = Matrix.determinantByReduction(augMatrix);
+        // System.out.println(deter);
+        // System.out.println(Matrix.determinantByCofactor(augMatrix));
+        LinearSystem ls = new LinearSystem(augMatrix, constant);
+         ls.solveInverse().print();
         // LinearSystem ls = new LinearSystem(augMatrix);
         // ls.augmentedMatrix.print();
         // System.out.println();
