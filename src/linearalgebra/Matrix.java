@@ -185,7 +185,56 @@ public class Matrix {
         tempMatrix.transpose();
         return tempMatrix;
     }
+    public Matrix inverse() {
+        // Isi augmented menjadi [A | I]
+        int order = this.matrix.length;
+        Matrix augmented = new Matrix(order, 2 * order);
+        for (int i = 0; i < order; ++i) {
+            for (int j = 0; j < order; ++j) {
+                augmented.matrix[i][j] = this.matrix[i][j];
+                if (i == j) augmented.matrix[i][j + order] = 1;
+            }
+        }
+        
+        // Forward phase (Row echelon)
+        int currentRow = 0;
+        for (int currentColumn = 0; currentColumn < order; ++currentColumn) {
+            int firstRow = currentRow;
+            
+            while (firstRow < order && augmented.matrix[firstRow][currentColumn] == 0) ++firstRow;
+            if (firstRow >= order) continue;
 
+            augmented.swapRow(firstRow, currentRow);
+            augmented.divideRow(currentRow, augmented.matrix[currentRow][currentColumn]); 
+
+            for (int below = currentRow + 1; below < order; ++below) {
+                if (augmented.matrix[below][currentColumn] == 0) continue;
+                double multiple = augmented.matrix[below][currentColumn] / augmented.matrix[currentRow][currentColumn];
+                augmented.subtractRowFromRow(below, currentRow, multiple);
+            }
+            ++currentRow;
+        }
+        // Backward phase (Reduced row echelon)
+        for (int currentColumn = 0; currentColumn < order; ++currentColumn) {
+            int lastRow = order - 1;
+
+            while (lastRow >= 0 && augmented.matrix[lastRow][currentColumn] != 1) --lastRow;
+            if (lastRow <= 0) continue;
+
+            for (int above = 0; above < lastRow; ++above) {
+                if (augmented.matrix[above][currentColumn] == 0) continue;
+                double multiple = augmented.matrix[above][currentColumn] / augmented.matrix[lastRow][currentColumn];
+                augmented.subtractRowFromRow(above, lastRow, multiple);
+            }
+        }
+        Matrix result = new Matrix(order, order);
+        for (int i = 0; i < order; ++i) {
+            for (int j = 0; j < order; ++j) {
+                result.matrix[i][j] = augmented.matrix[i][j+order];
+            }
+        }
+        return result;
+    }
     public static Matrix inverseByAdjoint(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
         double det = determinantByCofactor(m);
