@@ -213,9 +213,9 @@ public class Image {
                     if (sentGreen < 0) sentGreen = 0;
                     if (sentBlue < 0) sentBlue = 0;
 
-                    if (sentRed == 256) --sentRed;
-                    if (sentGreen == 256) --sentGreen;
-                    if (sentBlue == 256) --sentBlue;
+                    if (sentRed >= 256) sentRed = 255;
+                    if (sentGreen >= 256) sentGreen = 255;
+                    if (sentBlue >= 256) sentBlue = 255;
 
 
                     int argb = (alpha << 24) + (sentRed << 16) + (sentGreen << 8) + sentBlue;
