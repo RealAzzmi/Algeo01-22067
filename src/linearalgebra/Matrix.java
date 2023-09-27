@@ -1,5 +1,12 @@
 package linearalgebra;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Matrix {
     public double[][] matrix;
     
@@ -304,5 +311,53 @@ public class Matrix {
         }
         return m3;
 
+    }
+
+    public static Matrix getInputMatrixFromUser(Scanner userInput) {
+        System.out.println("Masukkan jumlah baris dan kolom matriks augmented: ");
+        int row_count = userInput.nextInt();
+        int col_count = userInput.nextInt();
+
+        System.out.println("Masukkan matriks augmented: ");
+        Matrix augMatrix = new Matrix(row_count, col_count);
+        for (int i = 0; i < row_count; ++i) {
+            for (int j = 0; j < col_count; ++j) {
+                augMatrix.matrix[i][j] = userInput.nextDouble();
+            }
+        }
+
+        return augMatrix;
+    }
+
+    public static Matrix getInputMatrixFromFile(String fileName) throws FileNotFoundException {
+        File inputFile = new File(fileName);
+        Scanner fileInput = new Scanner(new FileInputStream(inputFile));
+
+        List<List<Double>> matrixData = new ArrayList<>();
+
+        while (fileInput.hasNextLine()) {
+            String line = fileInput.nextLine();
+            String[] values = line.split("\\s+");
+
+            List<Double> row = new ArrayList<>();
+            for (String value : values) {
+                row.add(Double.parseDouble(value));
+            }
+
+            matrixData.add(row);
+        }
+
+        int row_count_file = matrixData.size();
+        int col_count_file = matrixData.get(0).size();
+
+        Matrix augMatrix_file = new Matrix(row_count_file, col_count_file);
+        for (int i = 0; i < row_count_file; ++i) {
+            List<Double> row = matrixData.get(i);
+            for (int j = 0; j < col_count_file; ++j) {
+                augMatrix_file.matrix[i][j] = row.get(j);
+            }
+        }
+
+        return augMatrix_file;
     }
 }
