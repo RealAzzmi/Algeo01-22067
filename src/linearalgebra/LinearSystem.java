@@ -57,7 +57,7 @@ public class LinearSystem {
 
         // Forward phase (Row echelon)
         int currentRow = 0;
-        for (int currentColumn = 0; currentColumn < result.col() - 1; ++currentColumn) {
+        for (int currentColumn = 0; currentColumn < result.col(); ++currentColumn) {
             int firstRow = currentRow;
             
             while (firstRow < result.row() && result.matrix[firstRow][currentColumn] == 0) ++firstRow;
@@ -70,11 +70,7 @@ public class LinearSystem {
                 if (result.matrix[below][currentColumn] == 0) continue;
                 double multiple = result.matrix[below][currentColumn] / result.matrix[currentRow][currentColumn];
                 result.subtractRowFromRow(below, currentRow, multiple);
-            }
-
-            result.print();
-            System.out.println();
-            System.out.println();
+            }   
             ++currentRow;
         }
         // Backward substitution
