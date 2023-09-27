@@ -25,14 +25,12 @@ public class Main {
             {16}
         };
         Matrix inputMatrix = new Matrix(inputArray);
-
+        Bicubic.prepare();
         double x = 0.5;
         double y = 0.5;
-
         double result = Bicubic.approximate(inputMatrix, x, y);
 
         System.out.println("Approximation: " + result);
-        System.out.println(Math.pow(0, 0));
     }
 }
 

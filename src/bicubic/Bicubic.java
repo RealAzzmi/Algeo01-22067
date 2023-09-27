@@ -1,8 +1,10 @@
 package bicubic;
 import linearalgebra.Matrix;
 public class Bicubic{
-    private static double[][] t ;
-    private static void prepare(double[][] m){
+    public static double[][] m ;
+    public static Matrix dMatrix;
+    public static void prepare(){
+        m= new double[16][16];
         int p=0,q=0;
         for(int i =0;i<16;i++){
             for(int j=0;j<4;j++){
@@ -41,7 +43,6 @@ public class Bicubic{
                     m[i][j+8] = 2*j*Math.pow(p, j-1)*Math.pow(q, 1);
                     m[i][j+12] = 3*j*Math.pow(p, j-1)*Math.pow(q, 2);
                 }
-            
         }
             if(p==0&&q==0){
                 p++;
@@ -60,14 +61,10 @@ public class Bicubic{
                 continue;
             }
         }
+        Matrix xMatrix = new Matrix(m);
+        dMatrix = xMatrix.inverse();
     }
     public static double approximate(Matrix inputMatrix, double x, double y) {
-        t = new double[16][16];
-        prepare(t);
-        
-        Matrix xMatrix = new Matrix(t);
-        xMatrix.print();
-        Matrix dMatrix = xMatrix.inverse();
         Matrix coefficients = Matrix.multiplyMatrix(dMatrix, inputMatrix);
         double approximation = 0;
         for (int yExp = 0; yExp < 4; ++yExp) {
