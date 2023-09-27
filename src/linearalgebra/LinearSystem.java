@@ -2,11 +2,14 @@ package linearalgebra;
 
 public class LinearSystem {
     public Matrix augmentedMatrix;
-
+    public Matrix coefficient;
+    public Matrix constant;
     public LinearSystem(Matrix augmentedMatrix) {
         this.augmentedMatrix = augmentedMatrix;
     }
     public LinearSystem(Matrix coefficient, Matrix constant) {
+        this.coefficient =coefficient;
+        this.constant = constant;
 
     }
 
@@ -84,6 +87,13 @@ public class LinearSystem {
         }
         return solution;
     }
+    public Matrix solveInverse(){
+        Matrix result = new Matrix(this.coefficient.row(),this.constant.col());
+        Matrix iCoeff = this.coefficient.inverse();
+        result = Matrix.multiplyMatrix(iCoeff, this.constant);
+        return result;
+    }
+
 
     public Matrix cramer() {
         int nCoeff = this.augmentedMatrix.row();
