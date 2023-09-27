@@ -186,7 +186,7 @@ public class Matrix {
         return tempMatrix;
     }
 
-    public static Matrix inverse(Matrix m) {
+    public static Matrix inverseByAdjoint(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
         double det = determinantByCofactor(m);
 
