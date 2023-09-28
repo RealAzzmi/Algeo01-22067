@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import bicubic.Bicubic;
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
 import regression.Regression;
@@ -346,6 +347,7 @@ public class Application {
                     break;
                 case 6:
                     // bicubic
+                    
                     break;
                 case 7:
                     // resize image
@@ -367,8 +369,8 @@ public class Application {
                             System.out.print("Masukkan letak dan nama file hasil resize (misal: output.png): ");
                             userInput.nextLine();
                             String outputFileName = userInput.nextLine();
-
-                            resizeimage.Resizeimage resizer = new resizeimage.Resizeimage();
+                            Bicubic.prepare();
+                            Resizeimage resizer = new resizeimage.Resizeimage();
                             resizer.load(inputFileName);
                             resizer.resize(factor, outputFileName);
 
