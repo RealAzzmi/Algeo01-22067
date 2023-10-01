@@ -38,7 +38,7 @@ public class Regression {
         }
 
         LinearSystem ls = new LinearSystem(regMatrix);
-        Matrix solution = ls.gauss();
+        Matrix solution = ls.gauss().solution;
 
         return solution;
     }
