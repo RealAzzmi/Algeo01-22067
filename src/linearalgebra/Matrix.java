@@ -192,7 +192,7 @@ public class Matrix {
         tempMatrix.transpose();
         return tempMatrix;
     }
-    public Matrix inverse() {
+    public Solution inverse() {
         // Isi augmented menjadi [A | I]
         int order = this.matrix.length;
         Matrix augmented = new Matrix(order, 2 * order);
@@ -240,7 +240,7 @@ public class Matrix {
                 result.matrix[i][j] = augmented.matrix[i][j+order];
             }
         }
-        return result;
+        return new Solution(SolutionType.UNIQUE, result);
     }
     public static Matrix inverseByAdjoint(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
@@ -325,7 +325,6 @@ public class Matrix {
                 augMatrix.matrix[i][j] = userInput.nextDouble();
             }
         }
-
         return augMatrix;
     }
 
