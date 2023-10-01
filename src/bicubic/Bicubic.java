@@ -62,7 +62,7 @@ public class Bicubic{
             }
         }
         Matrix xMatrix = new Matrix(m);
-        dMatrix = xMatrix.inverse();
+        dMatrix = xMatrix.inverse().solution;
     }
     public static double approximate(Matrix inputMatrix, double x, double y) {
         Matrix coefficients = Matrix.multiplyMatrix(dMatrix, inputMatrix);

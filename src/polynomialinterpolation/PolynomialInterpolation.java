@@ -29,7 +29,7 @@ public class PolynomialInterpolation {
         for (int row = 0; row < totalPoint; ++row) {
             augmented.matrix[row][totalPoint] = y.get(row);
         }
-        coefficient = new LinearSystem(augmented).gaussJordan();
+        coefficient = new LinearSystem(augmented).gauss().solution;
     }
     public double approximate(double x) {
         int totalPoint = this.x.size();
