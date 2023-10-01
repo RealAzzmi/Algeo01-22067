@@ -130,12 +130,13 @@ public class LinearSystem {
         }
 
         // Check if infinite
-        for (int diagonal = 0; diagonal < Math.min(augmentedMatrix.row(), augmentedMatrix.col() - 1); ++diagonal) {
+        if (augmentedMatrix.col() - 1 != augmentedMatrix.row()) return new Solution(SolutionType.INFINITE, result);
+        int diagonalLength = augmentedMatrix.row() - (augmentedMatrix.col() - 1);
+        for (int diagonal = 0; diagonal < diagonalLength; ++diagonal) {
             if (result.matrix[diagonal][diagonal] != 1) {
                 return new Solution(SolutionType.INFINITE, result);
             }
         }
-
         // Otherwise, the solution must be unique.
         // Backward substitution
         int nonZeroRow = result.row() - 1;
