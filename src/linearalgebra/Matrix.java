@@ -148,7 +148,7 @@ public class Matrix {
     }
     return true;
     }
-    public static  double determinantByReduction(Matrix m) {
+    public static double determinantByReduction(Matrix m) {
         if(isUpperTriangular(m) || isLowerTriangular(m)){
             double det =1;
             for(int i =0;i<m.row();i++){

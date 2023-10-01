@@ -121,7 +121,7 @@ public class LinearSystem {
             }
             ++currentRow;
         }
-
+        result.print();
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
@@ -130,12 +130,12 @@ public class LinearSystem {
         }
 
         // Check if infinite
-        for (int diagonal = 0; diagonal < Math.min(augmentedMatrix.row(), augmentedMatrix.col() - 1); ++diagonal) {
+        if (result.col() - 1 > result.row()) return new Solution(SolutionType.INFINITE, result);
+        for (int diagonal = 0; diagonal < result.col() - 1; ++diagonal) {
             if (result.matrix[diagonal][diagonal] != 1) {
                 return new Solution(SolutionType.INFINITE, result);
             }
         }
-
         // Otherwise, the solution must be unique.
         // Backward substitution
         int nonZeroRow = result.row() - 1;
