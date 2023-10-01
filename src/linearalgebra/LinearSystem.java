@@ -130,7 +130,7 @@ public class LinearSystem {
         }
 
         // Check if infinite
-        if (augmentedMatrix.col() - 1 != augmentedMatrix.row()) return new Solution(SolutionType.INFINITE, result);
+        if (augmentedMatrix.col() - 1 > augmentedMatrix.row()) return new Solution(SolutionType.INFINITE, result);
         int diagonalLength = augmentedMatrix.row() - (augmentedMatrix.col() - 1);
         for (int diagonal = 0; diagonal < diagonalLength; ++diagonal) {
             if (result.matrix[diagonal][diagonal] != 1) {
