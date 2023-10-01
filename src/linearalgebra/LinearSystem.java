@@ -121,7 +121,7 @@ public class LinearSystem {
             }
             ++currentRow;
         }
-
+        result.print();
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
@@ -130,9 +130,8 @@ public class LinearSystem {
         }
 
         // Check if infinite
-        if (augmentedMatrix.col() - 1 > augmentedMatrix.row()) return new Solution(SolutionType.INFINITE, result);
-        int diagonalLength = augmentedMatrix.row() - (augmentedMatrix.col() - 1);
-        for (int diagonal = 0; diagonal < diagonalLength; ++diagonal) {
+        if (result.col() - 1 > result.row()) return new Solution(SolutionType.INFINITE, result);
+        for (int diagonal = 0; diagonal < result.col() - 1; ++diagonal) {
             if (result.matrix[diagonal][diagonal] != 1) {
                 return new Solution(SolutionType.INFINITE, result);
             }
