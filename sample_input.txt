@@ -21,3 +21,19 @@ Sample inputnya augmented matrix
 0 1 5
 3 -6 9
 2 6 1
+
+Sistem Persamaaan Linier
+- Gauss
+- Gauss-Jordan
+- Matriks balikan
+- Cramer
+Determinan
+- Kofaktor
+- Reduksi
+Matriks balikan
+- Adjoint
+- Gauss
+Interpolasi Polinom
+Interpolasi Bicubic Spline
+Regresi linier berganda
+Keluar
