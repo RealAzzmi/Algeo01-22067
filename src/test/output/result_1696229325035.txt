@@ -1,0 +1,3 @@
+Memiliki solusi unik.
+x_{1} = -1.250000
+x_{2} = 1.250000
