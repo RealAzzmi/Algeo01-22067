@@ -202,7 +202,7 @@ public class LinearSystem {
 
         // return result;
 
-        return new Solution(null, null);
+        return new Solution(SolutionType.UNIQUE, result);
     }
 
 }
