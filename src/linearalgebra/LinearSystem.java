@@ -121,7 +121,6 @@ public class LinearSystem {
             }
             ++currentRow;
         }
-        result.print();
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
