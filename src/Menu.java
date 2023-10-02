@@ -3,26 +3,35 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.sound.midi.MidiSystem;
+
 import bicubic.Bicubic;
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
 import linearalgebra.Solution;
 import regression.Regression;
 import resizeimage.Resizeimage;
+import utils.Savetofile;
 
 public class Menu {
     public static void solveLinearSystem(Scanner userInput) {
-        System.out.println("Metode:");
-        System.out.println("1. Metode Gauss");
-        System.out.println("2. Metode Gauss-Jordan");
-        System.out.println("3. Metode Matriks balikan");
-        System.out.println("4. Metode Cramer");
-        System.out.print("Pilih metode: ");
-
-        int linearSubMenuChoice = userInput.nextInt();
-        System.out.println();
-
         while (true) {
+            System.out.println("Metode:");
+            System.out.println("1. Metode Gauss");
+            System.out.println("2. Metode Gauss-Jordan");
+            System.out.println("3. Metode Matriks balikan");
+            System.out.println("4. Metode Cramer");
+            System.out.print("Pilih metode: ");
+
+            int linearSubMenuChoice = userInput.nextInt();
+            System.out.println();
+
+            while (linearSubMenuChoice > 4 || linearSubMenuChoice < 1){
+                System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
+                linearSubMenuChoice = userInput.nextInt();
+                System.out.println();
+            }
+
             System.out.println("1. Input dari keyboard");
             System.out.println("2. Input dari file (.txt)");
             System.out.println("3. Kembali");
@@ -69,6 +78,11 @@ public class Menu {
 
                 // solution = ls.cramer();
             }
+            
+            String resultString = solution.toString();
+            String resultFolderName = "result";
+            Savetofile.saveResultToFile(resultString, resultFolderName);
+
             solution.print();
         }
     }
