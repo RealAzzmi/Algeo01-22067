@@ -38,6 +38,13 @@ public class Menu {
             System.out.print("Pilih jenis input: ");
             int inputChoice = userInput.nextInt();
 
+
+            while (inputChoice > 4 || inputChoice < 1){
+                System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
+                linearSubMenuChoice = userInput.nextInt();
+                System.out.println();
+            }
+
             LinearSystem ls = null;
             Solution solution = null;
 
