@@ -81,12 +81,7 @@ public class Menu {
             } else if (linearSubMenuChoice == 3) {
                 solution = ls.solveInverse();
                 solution.print();
-            } else if (linearSubMenuChoice == 4) {
-                if(ls.augmentedMatrix.row()!=ls.augmentedMatrix.col()){
-                    System.out.println("Bukan Matriks Persegi, tidak dapat diselesaikan dengan metode cramer");
-                }else{ 
-                    solution = ls.cramer();
-                }    
+            } else if (linearSubMenuChoice == 4) { 
                 // cramer harus diubah biar mengreturn tipe Solution dan bukan tipe Matrix,
                 // sehingga dapat diprint
                 // di akhir.
@@ -95,7 +90,7 @@ public class Menu {
             }
             
             String resultString = solution.toString();
-            String resultFolderName = "result";
+            String resultFolderName = "test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
 
         }
