@@ -79,7 +79,7 @@ public class LinearSystem {
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
-                return new Solution(SolutionType.NONEXISTENT, null);
+                return new Solution(SolutionType.NONEXISTENT, new Matrix(null));
             }
         }
         // Check if infinite
@@ -124,7 +124,7 @@ public class LinearSystem {
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
-                return new Solution(SolutionType.NONEXISTENT, null);
+                return new Solution(SolutionType.NONEXISTENT, new Matrix(null));
             }
         }
 
@@ -165,8 +165,12 @@ public class LinearSystem {
     }
 
     public Solution cramer() {
+        if(this.augmentedMatrix.row()!=this.augmentedMatrix.col()-1){
+            Solution solution = new Solution(SolutionType.OTHER, "Tidak bisa menyelesaikan dengan metode cramer karena bukan matriks persegi.");
+            return solution;
+        }
         int nCoeff = this.augmentedMatrix.row();
-
+        
         // Inisialisasi matriks koefisien, konstanta, dan hasil
         Matrix coeff = new Matrix(nCoeff, nCoeff);
         Matrix constant = new Matrix(nCoeff, 1);
@@ -186,7 +190,7 @@ public class LinearSystem {
         if (detCoeff == 0) {
             // Metode cramer tidak dapat digunakan karena determinan matriks koefisien
             // adalah nol
-            return null;
+            return new Solution(SolutionType.SINGULAR,new Matrix(null));
         }
 
         // Menyelipkan matriks konstanta ke matriks koefisien lalu menghitung pembagian

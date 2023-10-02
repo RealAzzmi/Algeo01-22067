@@ -74,14 +74,12 @@ public class Menu {
 
             if (linearSubMenuChoice == 1) {
                 solution = ls.gauss();
-                solution.print();
             } else if (linearSubMenuChoice == 2) {
                 solution = ls.gaussJordan();
-                solution.print();
             } else if (linearSubMenuChoice == 3) {
                 solution = ls.solveInverse();
-                solution.print();
             } else if (linearSubMenuChoice == 4) { 
+                solution = ls.cramer();
                 // cramer harus diubah biar mengreturn tipe Solution dan bukan tipe Matrix,
                 // sehingga dapat diprint
                 // di akhir.
@@ -92,7 +90,7 @@ public class Menu {
             String resultString = solution.toString();
             String resultFolderName = "test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
-
+            solution.print();
         }
     }
 
