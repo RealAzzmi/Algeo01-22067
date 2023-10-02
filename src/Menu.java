@@ -67,11 +67,19 @@ public class Menu {
 
             if (linearSubMenuChoice == 1) {
                 solution = ls.gauss();
+                solution.print();
             } else if (linearSubMenuChoice == 2) {
                 solution = ls.gaussJordan();
+                solution.print();
             } else if (linearSubMenuChoice == 3) {
                 solution = ls.solveInverse();
+                solution.print();
             } else if (linearSubMenuChoice == 4) {
+                if(ls.augmentedMatrix.row()!=ls.augmentedMatrix.col()){
+                    System.out.println("Bukan Matriks Persegi, tidak dapat diselesaikan dengan metode cramer");
+                }else{ 
+                    solution = ls.cramer();
+                }    
                 // cramer harus diubah biar mengreturn tipe Solution dan bukan tipe Matrix,
                 // sehingga dapat diprint
                 // di akhir.
@@ -83,7 +91,6 @@ public class Menu {
             String resultFolderName = "result";
             Savetofile.saveResultToFile(resultString, resultFolderName);
 
-            solution.print();
         }
     }
 
