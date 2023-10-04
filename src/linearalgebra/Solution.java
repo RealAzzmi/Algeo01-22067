@@ -7,6 +7,7 @@ enum SolutionType {
     INFINITE,
     // Inverse Matrix Solution Type
     SINGULAR,
+    INVERTIBLE,
     OTHER
 }
 
@@ -73,6 +74,8 @@ public class Solution {
             result.append("Matriks koefisien tidak memiliki balikan.\n");
         } else if (this.type == SolutionType.OTHER) {
             result.append(message);
+        } else if (this.type == SolutionType.INVERTIBLE){
+            result.append(solution.toString());
         } else {
             result.append("Solution tidak terdefinisi\n");
         }
