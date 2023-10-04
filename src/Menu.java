@@ -355,7 +355,7 @@ public class Menu {
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
         while(true){
-        System.out.print("Masukan lokasi file input(misal: input.txt): ");
+        System.out.print("Masukan lokasi file input: ");
         userInput.nextLine();
 
         String fileName = userInput.nextLine();
@@ -389,7 +389,8 @@ public class Menu {
         b = Double.parseDouble(elementss[1]);
         Bicubic.prepare();
         double result = Bicubic.approximate(matrixCoeff, a, b);
-        System.out.println("Aproksimasinya: "+ result);
+        System.out.println("Approksimasinya: " + "\n" + result);
+        Savetofile.saveResultToFile("Approksimasinya: " + result, "src/test/output");
     }
     catch(FileNotFoundException e){
         System.err.println("File tidak ditemukan " + e.getMessage());
