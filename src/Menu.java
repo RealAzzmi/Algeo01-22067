@@ -300,7 +300,7 @@ public class Menu {
     }
 
     public static void solvePolynomial(Scanner userInput) {
-
+        //
     }
 
     public static void solveMultipleLinearRegression(Scanner userInput) {
@@ -422,8 +422,10 @@ public class Menu {
     }
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
+        while(true){
         System.out.print("Masukan lokasi file input(misal: input.txt): ");
         userInput.nextLine();
+
         String fileName = userInput.nextLine();
         try {
         File inputFile = new File(fileName);
@@ -460,6 +462,8 @@ public class Menu {
     catch(FileNotFoundException e){
         System.err.println("File tidak ditemukan " + e.getMessage());
     }
+    break;
+}
 }
 
     public static void solveResizeImage(Scanner userInput) {
@@ -485,7 +489,6 @@ public class Menu {
                 Resizeimage resizer = new resizeimage.Resizeimage();
                 resizer.load(inputFileName);
                 resizer.resize(factor, outputFileName);
-
                 System.out.println("Gambar berhasil diresize dan disimpan sebagai " + outputFileName);
                 break;
             }
