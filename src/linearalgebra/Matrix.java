@@ -285,17 +285,18 @@ public class Matrix {
         return new Solution(SolutionType.INVERTIBLE, result);
     }
 
-    public static Matrix inverseByAdjoint(Matrix m) {
+    public Solution inverseByAdjoint() {
         // Pre kondisi : Matriks harus matriks persegi
-        double det = m.determinantByCofactor().value;
+        if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED);
+        double det = this.determinantByCofactor().value;
 
         if (det == 0) {
             // Matriks tidak punya invers
-            return null;
+            return new Solution(SolutionType.SINGULAR);
         } else {
-            Matrix adjoint = m.adjoint().solution;
+            Matrix adjoint = this.adjoint().solution;
             Matrix inverseMatrix = adjoint.multiplyByNum(1.0 / det);
-            return inverseMatrix;
+            return new Solution(SolutionType.INVERTIBLE, inverseMatrix);
         }
     }
 
