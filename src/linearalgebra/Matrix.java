@@ -240,7 +240,7 @@ public class Matrix {
                 result.matrix[i][j] = augmented.matrix[i][j+order];
             }
         }
-        return new Solution(SolutionType.UNIQUE, result);
+        return new Solution(SolutionType.INVERTIBLE, result);
     }
     public static Matrix inverseByAdjoint(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
@@ -288,6 +288,20 @@ public class Matrix {
             }
         return mMinor;
     }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+    
+        for (int i = 0; i < this.row(); ++i) {
+            for (int j = 0; j < this.col(); ++j) {
+                result.append(String.format("%5.2f ", this.matrix[i][j]));
+            }
+            result.append("\n");
+        }
+    
+        return result.toString();
+    }
+    
     
 
     public void print() {
