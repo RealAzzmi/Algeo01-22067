@@ -288,8 +288,8 @@ public class Matrix {
     public Solution inverseByAdjoint() {
         // Pre kondisi : Matriks harus matriks persegi
         if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED);
+        if (this.row() == 1) return new Solution(SolutionType.OTHER, "Matriks 1 x 1 tidak dapat diselesaikan dengan metode inverse dengan adjoint walaupun memiliki inverse");
         double det = this.determinantByCofactor().value;
-
         if (det == 0) {
             // Matriks tidak punya invers
             return new Solution(SolutionType.SINGULAR);

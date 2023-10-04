@@ -84,6 +84,9 @@ public class Solution {
 
         } else if (this.type == SolutionType.SINGULAR) {
             result.append("Matriks tidak memiliki balikan.\n");
+        } else if (this.type == SolutionType.INVERTIBLE) {
+            result.append(solution.toString());
+            result.append("\n");
         }
          else if (this.type == SolutionType.UNDEFINED) {
             result.append("Matriks bukan matriks persegi.\n");

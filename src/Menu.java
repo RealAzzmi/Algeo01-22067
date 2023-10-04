@@ -175,67 +175,70 @@ public class Menu {
             System.out.println("Metode:");
             System.out.println("1. Metode Adjoint (harus matriks persegi)");
             System.out.println("2. Metode OBE");
+            System.out.println("3. Kembali");
             System.out.print("Pilih metode: ");
             int inverseSubMenuChoice = userInput.nextInt();
             System.out.println();
 
-            while (inverseSubMenuChoice > 2 || inverseSubMenuChoice < 1) {
+            while (inverseSubMenuChoice > 3 || inverseSubMenuChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 inverseSubMenuChoice = userInput.nextInt();
                 System.out.println();
+            }
+
+            if (inverseSubMenuChoice == 3) {
+                System.out.println();
+                break;
             }
 
             System.out.println("1. Input dari keyboard");
             System.out.println("2. Input dari file (.txt)");
             System.out.println("3. Kembali");
             System.out.print("Pilih jenis input: ");
+
             int inputChoice = userInput.nextInt();
             System.out.println();
 
-            while (inputChoice > 4 || inputChoice < 1) {
+            while (inputChoice > 3 || inputChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 inputChoice = userInput.nextInt();
                 System.out.println();
             }
 
-            Solution solution = null;
+            if (inputChoice == 3) {
+                System.out.println();
+                break;
+            }
 
+            Matrix augMatrix = null;
             if (inputChoice == 1) {
-                Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
-                if (inverseSubMenuChoice == 1) {
-                    System.out.println("Sedang dalam pengembangan");
-                } else if (inverseSubMenuChoice == 2) {
-                    solution = augMatrix.inverse();
-                    solution.print();
-                }
+                augMatrix = Matrix.getInputMatrixFromUser(userInput);
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan nama file input: ");
                 userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
                 String inputFileName = userInput.nextLine();
 
                 try {
-                    Matrix augMatrix_file = Matrix.getInputMatrixFromFile(inputFileName);
-                    if (inverseSubMenuChoice == 1) {
-                        solution = augMatrix_file.inverse();
-                    }
+                    augMatrix = Matrix.getInputMatrixFromFile(inputFileName);
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan: " + e.getMessage());
                     continue;
                 }
                 System.out.println();
 
-            } else if (inputChoice == 3) {
-                System.out.println();
-                break;
-            } else {
-                System.out.println("Pilihan tidak valid. Silakan pilih lagi.");
-                continue;
+            }
+
+            Solution solution = null;
+            if (inverseSubMenuChoice == 1) {
+                solution = augMatrix.inverseByAdjoint();
+            } else if (inverseSubMenuChoice == 2) {
+                solution = augMatrix.inverse();
             }
 
             String resultString = solution.toString();
             String resultFolderName = "src/test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
-
+            solution.print();
         }
     }
 
