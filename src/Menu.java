@@ -274,7 +274,6 @@ public class Menu {
                     solverPolynom.addPoint(x, y);
                 }
                 double val = userInput.nextDouble();
-                System.out.println("Val is " + val);
                 solverPolynom.run();
                 solverPolynom.print();
                 Solution solution = solverPolynom.approximate(val);
