@@ -193,6 +193,7 @@ public class Matrix {
         return tempMatrix;
     }
     public Solution inverse() {
+        if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED, "");
         // Isi augmented menjadi [A | I]
         int order = this.matrix.length;
         Matrix augmented = new Matrix(order, 2 * order);

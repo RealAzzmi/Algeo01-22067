@@ -7,6 +7,8 @@ enum SolutionType {
     INFINITE,
     // Inverse Matrix Solution Type
     SINGULAR,
+    UNDEFINED,
+    //
     OTHER
 }
 
@@ -14,6 +16,10 @@ public class Solution {
     public SolutionType type;
     public Matrix solution;
     public String message;
+
+    public Solution(SolutionType type) {
+        this.type = type;
+    }
 
     public Solution(SolutionType type, Matrix solution) {
         this.type = type;
@@ -70,9 +76,14 @@ public class Solution {
             }
 
         } else if (this.type == SolutionType.SINGULAR) {
-            result.append("Matriks koefisien tidak memiliki balikan.\n");
-        } else if (this.type == SolutionType.OTHER) {
+            result.append("Matriks tidak memiliki balikan.\n");
+        }
+         else if (this.type == SolutionType.UNDEFINED) {
+            result.append("Matriks bukan matriks persegi.\n");
+         } 
+        else if (this.type == SolutionType.OTHER) {
             result.append(message);
+            result.append("\n");
         } else {
             result.append("Solution tidak terdefinisi\n");
         }
