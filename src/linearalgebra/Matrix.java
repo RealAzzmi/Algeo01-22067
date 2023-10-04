@@ -201,15 +201,18 @@ public class Matrix {
         }
     }
 
-    public static Matrix adjoint(Matrix original) {
-        Matrix tempMatrix = new Matrix(original.row(), original.col());
-        for (int i = 0; i < original.row(); i++) {
-            for (int j = 0; j < original.col(); j++) {
-                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * minor(original, i, j).determinantByCofactor().value;
+    public Solution adjoint() {
+        if (this.row() != this.col()) {
+            return new Solution(SolutionType.UNDEFINED);
+        }
+        Matrix tempMatrix = new Matrix(this.row(), this.col());
+        for (int i = 0; i < this.row(); i++) {
+            for (int j = 0; j < this.col(); j++) {
+                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * minor(this, i, j).determinantByCofactor().value;
             }
         }
         tempMatrix.transpose();
-        return tempMatrix;
+        return new Solution(SolutionType.OTHER, tempMatrix);
     }
 
     public Solution inverse() {
@@ -280,7 +283,7 @@ public class Matrix {
             // Matriks tidak punya invers
             return null;
         } else {
-            Matrix adjoint = adjoint(m);
+            Matrix adjoint = m.adjoint().solution;
             Matrix inverseMatrix = adjoint.multiplyByNum(1.0 / det);
             return inverseMatrix;
         }
