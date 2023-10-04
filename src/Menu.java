@@ -128,7 +128,7 @@ public class Menu {
             if (inputChoice == 1) {
                 Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
                 if (determinantSubMenuChoice == 1) {
-                    double detAugMatrix = Matrix.determinantByCofactor(augMatrix);
+                    double detAugMatrix = augMatrix.determinantByCofactor().value;
                     System.out.println(detAugMatrix);
                 } else if (determinantSubMenuChoice == 2) {
                     double detAugMatrix = Matrix.determinantByReduction(augMatrix);
@@ -144,7 +144,7 @@ public class Menu {
                     Matrix augMatrix_file = Matrix.getInputMatrixFromFile(inputFileName);
 
                     if (determinantSubMenuChoice == 1) {
-                        double detAugMatrix = Matrix.determinantByCofactor(augMatrix_file);
+                        double detAugMatrix = augMatrix_file.determinantByCofactor().value;
                         System.out.println(detAugMatrix);
                     } else if (determinantSubMenuChoice == 2) {
                         double detAugMatrix = Matrix.determinantByReduction(augMatrix_file);

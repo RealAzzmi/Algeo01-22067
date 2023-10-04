@@ -96,13 +96,14 @@ public class Matrix {
         return result;
     }
 
-    public static double determinantByCofactor(Matrix m) {
-        int n = m.matrix.length;
+    public Solution determinantByCofactor() {
+        if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED);
+
+        int n = this.matrix.length;
         if (n == 1) {
-            return m.matrix[0][0];
-        }
-        if (n == 2) {
-            return m.matrix[0][0] * m.matrix[1][1] - m.matrix[0][1] * m.matrix[1][0];
+            return new Solution(SolutionType.OTHER, this.matrix[0][0]);
+        } else if (n == 2) {
+            return new Solution(SolutionType.OTHER, this.matrix[0][0] * this.matrix[1][1] - this.matrix[0][1] * this.matrix[1][0]);
         }
 
         double det = 0;
@@ -114,14 +115,15 @@ public class Matrix {
                     if (k == i) {
                         continue;
                     }
-                    subMatrix.matrix[j - 1][subCol++] = m.matrix[j][k];
+                    subMatrix.matrix[j - 1][subCol++] = this.matrix[j][k];
                 }
             }
             int sign = (i % 2 == 0) ? 1 : -1;
-            det += sign * m.matrix[0][i] * determinantByCofactor(subMatrix);
+            det += sign * this.matrix[0][i] * subMatrix.determinantByCofactor().value;
         }
-        return det;
+        return new Solution(SolutionType.OTHER, det);
     }
+    
     public static boolean isLowerTriangular(Matrix m){
         if (m.row()< 2){
         return false;
@@ -186,7 +188,7 @@ public class Matrix {
         Matrix tempMatrix = new Matrix(original.row(),original.col());
         for(int i =0;i<original.row();i++){
             for(int j=0;j<original.col();j++){
-                tempMatrix.matrix[i][j]= Math.pow(-1,i+ j)*determinantByCofactor(minor(original, i, j));
+                tempMatrix.matrix[i][j]= Math.pow(-1,i+ j) * minor(original, i, j).determinantByCofactor().value;
             }
         }
         tempMatrix.transpose();
@@ -245,7 +247,7 @@ public class Matrix {
     }
     public static Matrix inverseByAdjoint(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
-        double det = determinantByCofactor(m);
+        double det = m.determinantByCofactor().value;
 
         if(det == 0){
             // Matriks tidak punya invers

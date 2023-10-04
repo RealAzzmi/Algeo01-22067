@@ -186,7 +186,7 @@ public class LinearSystem {
         }
 
         // Determinan matriks koefisien
-        double detCoeff = Matrix.determinantByCofactor(coeff);
+        double detCoeff = coeff.determinantByCofactor().value;
 
         if (detCoeff == 0) {
             // Metode cramer tidak dapat digunakan karena determinan matriks koefisien
@@ -201,7 +201,7 @@ public class LinearSystem {
             for (int j = 0; j < nCoeff; j++) {
                 modifiedCoeff.matrix[j][i] = constant.matrix[j][0];
             }
-            double detModified = Matrix.determinantByCofactor(modifiedCoeff);
+            double detModified = modifiedCoeff.determinantByCofactor().value;
             result.matrix[i][0] = detModified / detCoeff;
         }
 
