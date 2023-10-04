@@ -82,11 +82,8 @@ public class Menu {
                 solution = ls.solveInverse();
                 solution.print();
             } else if (linearSubMenuChoice == 4) { 
-                // cramer harus diubah biar mengreturn tipe Solution dan bukan tipe Matrix,
-                // sehingga dapat diprint
-                // di akhir.
-
-                // solution = ls.cramer();
+                solution = ls.cramer();
+                solution.print();
             }
             
             String resultString = solution.toString();
@@ -137,7 +134,7 @@ public class Menu {
                 System.out.println();
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan nama file input: ");
-                userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
+                userInput.nextLine();
                 String inputFileName = userInput.nextLine();
 
                 try {
@@ -169,58 +166,6 @@ public class Menu {
     }
 
     public static void solveInverse(Scanner userInput) {
-        // System.out.println("Metode:");
-        // System.out.println("1. Metode Adjoint (harus matriks persegi)");
-        // System.out.println("2. Metode OBE");
-        // System.out.print("Pilih metode: ");
-        // int inverseSubMenuChoice = userInput.nextInt();
-        // // code
-
-        // switch (inverseSubMenuChoice) {
-        //     case 1:
-        //     case 2:
-        //         while (true) {
-        //             System.out.println("1. Input dari keyboard");
-        //             System.out.println("2. Input dari file (.txt)");
-        //             System.out.println("3. Kembali");
-        //             System.out.print("Pilih jenis input: ");
-        //             int inputChoice = userInput.nextInt();
-
-        //             switch (inputChoice) {
-        //                 case 1:
-        //                     Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
-        //                     if (inverseSubMenuChoice == 1) {
-        //                         Matrix inverseMatrix = Matrix.inverseByAdjoint(augMatrix);
-        //                         inverseMatrix.print();
-        //                     } else if (inverseSubMenuChoice == 2) {
-        //                         Matrix inveMatrix = augMatrix.inverse();
-        //                         inveMatrix.print();
-        //                     }
-        //                     break;
-        //                 case 2:
-        //                     System.out.print("Masukkan nama file input: ");
-        //                     userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
-        //                     String inputFileName = userInput.nextLine();
-
-        //                     try {
-        //                         Matrix augMatrix_file = Matrix.getInputMatrixFromFile(inputFileName);
-
-        //                         if (inverseSubMenuChoice == 1) {
-        //                             Matrix inverseMatrix = Matrix.inverseByAdjoint(augMatrix_file);
-        //                             inverseMatrix.print();
-        //                         } else if (inverseSubMenuChoice == 2) {
-        //                             Matrix inveMatrix = augMatrix_file.inverse();
-        //                             inveMatrix.print();
-        //                         }
-        //                     } catch (FileNotFoundException e) {
-        //                         System.err.println("File tidak ditemukan: " + e.getMessage());
-        //                     }
-        //                     break;
-        //                 default:
-        //                     System.out.println("Pilihan tidak valid. Silakan pilih lagi.");
-        //             }
-        //         }
-        // }
         while(true){
             System.out.println("Metode:");
             System.out.println("1. Metode Adjoint (harus matriks persegi)");
@@ -313,112 +258,98 @@ public class Menu {
             System.out.println();
 
             if(inputChoice == 1){
-                ;
+                System.out.println("Masukkan matriks nya (x1,x2,..,xn) dan y_i:");
+                int row_count, col_count;
+                System.out.println("Jumlah baris:");
+                row_count = userInput.nextInt();
+                System.out.println("Jumlah kolom:");
+                col_count = userInput.nextInt();
+
+                System.out.println("Masukkan matriksnya:");
+                Matrix augMatrix = new Matrix(row_count, col_count);
+                for (int i = 0; i < row_count; ++i) {
+                    for (int j = 0; j < col_count; ++j) {
+                        augMatrix.matrix[i][j] = userInput.nextDouble();
+                    }
+                }
+
+                System.out.println("Masukkan matriks (x1,x2,..,xn) yang ingin ditaksir nilai y nya:");
+
+                int col_count_est = col_count - 1;
+                Matrix estimateMatrix = new Matrix(col_count_est, 1);
+                for (int i = 0; i < col_count_est; i++) {
+                    for (int j = 0; j < 1; j++){
+                        estimateMatrix.matrix[i][j] = userInput.nextDouble();
+                    }
+                }
+
+                Regression reg = new Regression(augMatrix);
+                Matrix coefficients = reg.calculateRegression();
+
+                String regressionEquation = reg.getRegressionEquation(coefficients);
+
+                // Print the equation
+                System.out.println("Persamaan regresi adalah:");
+                System.out.println(regressionEquation);
+
+                double y_estimate = Regression.estimateY(coefficients, estimateMatrix);
+                System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
+
+                // Save the equation to a file
+                Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n" + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
+
+                break;
+            }
+
+            else if (inputChoice == 2){
+                System.out.print("Masukkan nama file input: ");
+                userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
+                String inputFileName = userInput.nextLine();
+
+                try {
+                    Matrix augMatrix = Matrix.getInputMatrixFromFile(inputFileName);
+
+                    // Display the matrix read from the file
+                    System.out.println("Matriks dari file " + inputFileName + ":");
+                    System.out.println(augMatrix.toString());
+
+                    System.out.println("Masukkan matriks (x1,x2,..,xn) yang ingin ditaksir nilai y nya:");
+
+                    int col_count_est = augMatrix.col() - 1;
+                    Matrix estimateMatrix = new Matrix(col_count_est, 1);
+                    for (int i = 0; i < col_count_est; i++) {
+                        for (int j = 0; j < 1; j++) {
+                            estimateMatrix.matrix[i][j] = userInput.nextDouble();
+                        }
+                    }
+
+                    Regression reg = new Regression(augMatrix);
+                    Matrix coefficients = reg.calculateRegression();
+
+                    String regressionEquation = reg.getRegressionEquation(coefficients);
+
+                    // Print the equation
+                    System.out.println("Persamaan regresi adalah:");
+                    System.out.println(regressionEquation);
+
+                    double y_estimate = Regression.estimateY(coefficients, estimateMatrix);
+                    System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
+
+                    // Save the equation to a file
+                    Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n" + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
+
+                    break;
+                } catch (FileNotFoundException e) {
+                    System.err.println("File tidak ditemukan: " + e.getMessage());
+                    continue;
+                }
+            }
+
+            else {
+                break;
             }
 
         }
-
-
-
-        // switch (true) {
-        //     case 1:
-        //         // System.out.println("Masukkan matriks nya (x1,x2,..,xn) dan y_i:");
-        //         // int row_count, col_count;
-        //         // System.out.println("Jumlah baris:");
-        //         // row_count = userInput.nextInt();
-        //         // System.out.println("Jumlah kolom:");
-        //         // col_count = userInput.nextInt();
-
-        //         // System.out.println("Masukkan matriksnya:");
-        //         // Matrix augMatrix = new Matrix(row_count, col_count);
-        //         // for (int i = 0; i < row_count; ++i) {
-        //         // for (int j = 0; j < col_count; ++j) {
-        //         // augMatrix.matrix[i][j] = userInput.nextDouble();
-        //         // }
-        //         // }
-
-        //         // System.out.println("Masukkan matriks (x1,x2,..,xn) yang ingin ditaksir nilai
-        //         // y nya:");
-
-        //         // int col_count_est = col_count - 1;
-        //         // Matrix estimateMatrix = new Matrix(col_count_est, 1);
-        //         // for (int i = 0; i < col_count_est; i++) {
-        //         // for (int j = 0; j < 1; j++){
-        //         // estimateMatrix.matrix[i][j] = userInput.nextDouble();
-        //         // }
-        //         // }
-
-        //         // Regression reg = new Regression(augMatrix);
-        //         // Matrix coefficients = reg.calculateRegression();
-
-        //         // System.out.println("Persamaan regresi adalah:");
-        //         // reg.printRegressionEquation(coefficients);
-
-        //         // double y_estimate = Regression.estimateY(coefficients, estimateMatrix);
-        //         // System.out.println("Nilai taksiran y adalah: " + y_estimate);
-
-        //         break;
-        //     case 2:
-        //         System.out.print("Masukkan nama file input: ");
-        //         userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
-        //         String inputFileName = userInput.nextLine();
-
-        //         try {
-        //             File inputFile = new File(inputFileName);
-        //             Scanner fileInput = new Scanner(new FileInputStream(inputFile));
-
-        //             int row_count = 0;
-        //             int col_count = 0;
-        //             Matrix augMatrix = null;
-        //             Matrix estimateMatrix = null;
-
-        //             while (fileInput.hasNextLine()) {
-        //                 String line = fileInput.nextLine();
-        //                 String[] values = line.split("\\s+");
-
-        //                 if (values.length > 0) {
-        //                     if (augMatrix == null) {
-        //                         row_count++;
-        //                         col_count = values.length;
-        //                         augMatrix = new Matrix(row_count, col_count);
-        //                     }
-
-        //                     for (int j = 0; j < col_count; ++j) {
-        //                         augMatrix.matrix[row_count][j] = Double.parseDouble(values[j]);
-        //                     }
-
-        //                     System.out.println(row_count);
-
-        //                 }
-        //             }
-
-        //             // Membaca nilai yang ingin ditaksir
-        //             String lastLine = fileInput.nextLine();
-        //             String[] estimateValues = lastLine.split("\\s+");
-        //             int col_count_est = col_count - 1;
-        //             System.out.println(col_count_est);
-        //             estimateMatrix = new Matrix(col_count_est, 1);
-        //             for (int j = 0; j < col_count_est; j++) {
-        //                 estimateMatrix.matrix[j][0] = Double.parseDouble(estimateValues[j]);
-        //             }
-
-        //             fileInput.close();
-
-        //             Regression reg = new Regression(augMatrix);
-        //             Matrix coefficients = reg.calculateRegression();
-
-        //             System.out.println("Persamaan regresi adalah:");
-        //             reg.printRegressionEquation(coefficients);
-
-        //             double y_estimate = Regression.estimateY(coefficients, estimateMatrix);
-        //             System.out.println("Nilai taksiran y adalah: " + y_estimate);
-
-        //         } catch (FileNotFoundException e) {
-        //             System.err.println("File tidak ditemukan: " + e.getMessage());
-        //         }
-        //         break;
-
-        // }
     }
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
