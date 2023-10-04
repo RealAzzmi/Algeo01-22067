@@ -60,22 +60,21 @@ public class LinearSystem {
             ++currentRow;
         }
         // Backward phase (Reduced row echelon)
-        for (int currentColumn = 0; currentColumn < result.col(); ++currentColumn) {
+        for (int currentColumn = 0; currentColumn < result.col() - 1; ++currentColumn) {
             int lastRow = result.row() - 1;
 
             while (lastRow >= 0 && result.matrix[lastRow][currentColumn] != 1)
                 --lastRow;
-            if (lastRow <= 0)
+            if (lastRow < 0)
                 continue;
-
             for (int above = 0; above < lastRow; ++above) {
                 if (result.matrix[above][currentColumn] == 0)
                     continue;
                 double multiple = result.matrix[above][currentColumn] / result.matrix[lastRow][currentColumn];
                 result.subtractRowFromRow(above, lastRow, multiple);
+                
             }
         }
-
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
@@ -83,7 +82,8 @@ public class LinearSystem {
             }
         }
         // Check if infinite
-        for (int diagonal = 0; diagonal < Math.min(augmentedMatrix.row(), augmentedMatrix.col() - 1); ++diagonal) {
+        if (result.col() - 1 > result.row()) return new Solution(SolutionType.INFINITE, result);
+        for (int diagonal = 0; diagonal < result.col() - 1; ++diagonal) {
             if (result.matrix[diagonal][diagonal] != 1) {
                 return new Solution(SolutionType.INFINITE, result);
             }
