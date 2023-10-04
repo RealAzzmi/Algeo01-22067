@@ -59,10 +59,12 @@ public class Solution {
                 int leading = 0;
                 while (leading < solution.col() - 1 && solution.matrix[currentRow][leading] == 0) ++leading;
                 if (leading == solution.col() - 1) continue;
-                result.append(String.format("x_{%d} = %f", leading + 1, solution.matrix[currentRow][solution.col() - 1]));
+                result.append(String.format("x_{%d} =", leading + 1));
+
+                if (solution.matrix[currentRow][solution.col() - 1] != 0) result.append(String.format(" %f", solution.matrix[currentRow][solution.col() - 1]));
                 for (int free = leading + 1; free < solution.col() - 1; ++free) {
                     if (solution.matrix[currentRow][free] == 0) continue;
-                    result.append(String.format(" - %fx_{%d}", -solution.matrix[currentRow][free], free + 1));
+                    result.append(String.format(" %fx_{%d} ", -solution.matrix[currentRow][free], free + 1));
                 }
                 result.append("\n");
             }
