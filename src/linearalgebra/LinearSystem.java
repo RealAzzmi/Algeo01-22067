@@ -60,30 +60,30 @@ public class LinearSystem {
             ++currentRow;
         }
         // Backward phase (Reduced row echelon)
-        for (int currentColumn = 0; currentColumn < result.col(); ++currentColumn) {
+        for (int currentColumn = 0; currentColumn < result.col() - 1; ++currentColumn) {
             int lastRow = result.row() - 1;
 
             while (lastRow >= 0 && result.matrix[lastRow][currentColumn] != 1)
                 --lastRow;
-            if (lastRow <= 0)
+            if (lastRow < 0)
                 continue;
-
             for (int above = 0; above < lastRow; ++above) {
                 if (result.matrix[above][currentColumn] == 0)
                     continue;
                 double multiple = result.matrix[above][currentColumn] / result.matrix[lastRow][currentColumn];
                 result.subtractRowFromRow(above, lastRow, multiple);
+                
             }
         }
-
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
-                return new Solution(SolutionType.NONEXISTENT, null);
+                return new Solution(SolutionType.NONEXISTENT, new Matrix(null));
             }
         }
         // Check if infinite
-        for (int diagonal = 0; diagonal < Math.min(augmentedMatrix.row(), augmentedMatrix.col() - 1); ++diagonal) {
+        if (result.col() - 1 > result.row()) return new Solution(SolutionType.INFINITE, result);
+        for (int diagonal = 0; diagonal < result.col() - 1; ++diagonal) {
             if (result.matrix[diagonal][diagonal] != 1) {
                 return new Solution(SolutionType.INFINITE, result);
             }
@@ -124,7 +124,7 @@ public class LinearSystem {
         // Check if nonexistent
         for (int nonZeroRow = currentRow; nonZeroRow < result.row(); ++nonZeroRow) {
             if (result.matrix[nonZeroRow][result.col() - 1] != 0) {
-                return new Solution(SolutionType.NONEXISTENT, null);
+                return new Solution(SolutionType.NONEXISTENT, new Matrix(null));
             }
         }
 
@@ -165,8 +165,12 @@ public class LinearSystem {
     }
 
     public Solution cramer() {
+        if(this.augmentedMatrix.row()!=this.augmentedMatrix.col()-1){
+            Solution solution = new Solution(SolutionType.OTHER, "Tidak bisa menyelesaikan dengan metode cramer karena bukan matriks persegi.");
+            return solution;
+        }
         int nCoeff = this.augmentedMatrix.row();
-
+        
         // Inisialisasi matriks koefisien, konstanta, dan hasil
         Matrix coeff = new Matrix(nCoeff, nCoeff);
         Matrix constant = new Matrix(nCoeff, 1);
@@ -186,7 +190,7 @@ public class LinearSystem {
         if (detCoeff == 0) {
             // Metode cramer tidak dapat digunakan karena determinan matriks koefisien
             // adalah nol
-            return null;
+            return new Solution(SolutionType.SINGULAR,new Matrix(null));
         }
 
         // Menyelipkan matriks konstanta ke matriks koefisien lalu menghitung pembagian
