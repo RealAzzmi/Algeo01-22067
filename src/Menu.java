@@ -37,7 +37,7 @@ public class Menu {
                 System.out.println();
                 break;
             }
-            
+
             System.out.println("1. Input dari keyboard");
             System.out.println("2. Input dari file (.txt)");
             System.out.println("3. Kembali");
@@ -101,18 +101,24 @@ public class Menu {
     }
 
     public static void solveDeterminant(Scanner userInput) {
-        while(true){
+        while(true) {
             System.out.println("Metode:");
             System.out.println("1. Metode Kofaktor");
             System.out.println("2. Metode Reduksi");
+            System.out.println("3. Kembali");
             System.out.print("Pilih metode: ");
             int determinantSubMenuChoice = userInput.nextInt();
             System.out.println();
 
-            while (determinantSubMenuChoice > 2 || determinantSubMenuChoice < 1){
+            while (determinantSubMenuChoice > 3 || determinantSubMenuChoice < 1){
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 determinantSubMenuChoice = userInput.nextInt();
                 System.out.println();
+            }
+
+            if (determinantSubMenuChoice == 3) {
+                System.out.println();
+                break;
             }
 
             System.out.println("1. Input dari keyboard");
@@ -123,7 +129,7 @@ public class Menu {
             System.out.println();
 
 
-            while (inputChoice > 4 || inputChoice < 1){
+            while (inputChoice > 3 || inputChoice < 1){
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 determinantSubMenuChoice = userInput.nextInt();
                 System.out.println();
@@ -165,9 +171,6 @@ public class Menu {
 
             } else if (inputChoice == 3) {
                 break;
-            } else {
-                System.out.println("Pilihan tidak valid. Silakan pilih lagi.");
-                continue;
             }
 
         }
