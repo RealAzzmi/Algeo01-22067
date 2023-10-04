@@ -9,6 +9,7 @@ import bicubic.Bicubic;
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
 import linearalgebra.Solution;
+import polynomialinterpolation.PolynomialInterpolation;
 import regression.Regression;
 import resizeimage.Resizeimage;
 import utils.Savetofile;
@@ -300,8 +301,58 @@ public class Menu {
     }
 
     public static void solvePolynomial(Scanner userInput) {
-        //
+        while(true){
+            System.out.println("1. Input dari keyboard");
+            System.out.println("2. Input dari file (.txt)");
+            System.out.println("3. Kembali");
+            System.out.print("Pilih jenis input: ");
+            int inputChoice = userInput.nextInt();
+            System.out.println();
+            if(inputChoice ==1){
+                System.out.println("Masukan nilai n: ");
+                int n = userInput.nextInt();
+                double x,y;
+                PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
+                for(int i=0;i<n;i++){
+                    x = userInput.nextDouble();
+                    y = userInput.nextDouble();
+                    solverPolynom.addPoint(x,y);
+                }
+                double val = userInput.nextDouble();
+                solverPolynom.run();
+                Solution solution = solverPolynom.approximate(val);
+                solution.print();
+            }
+            else if(inputChoice==2){
+                System.out.print("Masukan lokasi file(input.txt): ");
+                PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
+                userInput.nextLine();
+                double a,b;
+                String fileName = userInput.nextLine();
+                try {
+                File inputFile = new File(fileName);
+                Scanner fileInput = new Scanner(new FileInputStream(inputFile));
+                while(fileInput.hasNextLine()){
+                    String line =  fileInput.nextLine();
+                    String[] elements = line.trim().split("\\s+");
+                    a = Double.parseDouble(elements[0]);
+                    b = Double.parseDouble(elements[1]);
+                    solverPolynom.addPoint(a, b);
+                    }   
+                    String lastLine = fileInput.nextLine();
+                    String[] element = lastLine.trim().split("\\s+");
+                    double x = Double.parseDouble(element[0]);
+                    fileInput.close();
+                    solverPolynom.run();
+                    Solution solution = solverPolynom.approximate(x);
+                    solution.print();
+
+                }catch(FileNotFoundException e){
+                    System.err.println("File tidak ditemukan " + e.getMessage());
+                }
+            }
     }
+}
 
     public static void solveMultipleLinearRegression(Scanner userInput) {
         while(true){
