@@ -21,17 +21,23 @@ public class Menu {
             System.out.println("2. Metode Gauss-Jordan");
             System.out.println("3. Metode Matriks balikan");
             System.out.println("4. Metode Cramer");
+            System.out.println("5. Kembali");
             System.out.print("Pilih metode: ");
 
             int linearSubMenuChoice = userInput.nextInt();
             System.out.println();
 
-            while (linearSubMenuChoice > 4 || linearSubMenuChoice < 1){
+            while (linearSubMenuChoice > 5 || linearSubMenuChoice < 1){
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 linearSubMenuChoice = userInput.nextInt();
                 System.out.println();
             }
 
+            if (linearSubMenuChoice == 5) {
+                System.out.println();
+                break;
+            }
+            
             System.out.println("1. Input dari keyboard");
             System.out.println("2. Input dari file (.txt)");
             System.out.println("3. Kembali");
@@ -87,6 +93,7 @@ public class Menu {
             }
             
             String resultString = solution.toString();
+
             String resultFolderName = "src/test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
 

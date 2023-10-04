@@ -208,7 +208,7 @@ public class Matrix {
         Matrix tempMatrix = new Matrix(this.row(), this.col());
         for (int i = 0; i < this.row(); i++) {
             for (int j = 0; j < this.col(); j++) {
-                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * minor(this, i, j).determinantByCofactor().value;
+                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * this.minor(i, j).determinantByCofactor().value;
             }
         }
         tempMatrix.transpose();
@@ -256,7 +256,7 @@ public class Matrix {
 
             while (lastRow >= 0 && augmented.matrix[lastRow][currentColumn] != 1)
                 --lastRow;
-            if (lastRow <= 0)
+            if (lastRow < 0)
                 continue;
 
             for (int above = 0; above < lastRow; ++above) {
@@ -266,6 +266,16 @@ public class Matrix {
                 augmented.subtractRowFromRow(above, lastRow, multiple);
             }
         }
+        // Cek jika [I | A]. Jika tidak, maka matriks singular
+        boolean isValid = true;
+        for (int i = 0; i < order && isValid; ++i) {
+            for (int j = 0; j < order && isValid; ++j) {
+                if ((i == j && augmented.matrix[i][j] != 1) || (i != j && augmented.matrix[i][j] != 0)) isValid = false;
+            }
+        }
+        if (!isValid) return new Solution(SolutionType.SINGULAR);
+
+        // Jika iya, return inversenya.
         Matrix result = new Matrix(order, order);
         for (int i = 0; i < order; ++i) {
             for (int j = 0; j < order; ++j) {
@@ -275,22 +285,23 @@ public class Matrix {
         return new Solution(SolutionType.INVERTIBLE, result);
     }
 
-    public static Matrix inverseByAdjoint(Matrix m) {
+    public Solution inverseByAdjoint() {
         // Pre kondisi : Matriks harus matriks persegi
-        double det = m.determinantByCofactor().value;
+        if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED);
+        double det = this.determinantByCofactor().value;
 
         if (det == 0) {
             // Matriks tidak punya invers
-            return null;
+            return new Solution(SolutionType.SINGULAR);
         } else {
-            Matrix adjoint = m.adjoint().solution;
+            Matrix adjoint = this.adjoint().solution;
             Matrix inverseMatrix = adjoint.multiplyByNum(1.0 / det);
-            return inverseMatrix;
+            return new Solution(SolutionType.INVERTIBLE, inverseMatrix);
         }
     }
 
     public void transpose() {
-        // diasumsikan matriks persegi
+        // Diasumsikan matriks persegi
         for (int i = 0; i < this.row() - 1; i++) {
             for (int j = i + 1; j < this.col(); j++) {
                 double temp = this.matrix[i][j];
@@ -300,21 +311,21 @@ public class Matrix {
         }
     }
 
-    public static Matrix minor(Matrix original, int col, int row) {
-        Matrix mMinor = new Matrix(original.row() - 1, original.col() - 1);
+    public Matrix minor(int col, int row) {
+        Matrix mMinor = new Matrix(this.row() - 1, this.col() - 1);
         int x = 0;
-        for (int i = 0; i < original.row(); i++) {
+        for (int i = 0; i < this.row(); i++) {
             if (i == row) {
                 x = 1;
                 continue;
             }
             int y = 0;
-            for (int j = 0; j < original.col(); j++) {
+            for (int j = 0; j < this.col(); j++) {
                 if (j == col) {
                     y = 1;
                     continue;
                 }
-                mMinor.matrix[i - x][j - y] = original.matrix[i][j];
+                mMinor.matrix[i - x][j - y] = this.matrix[i][j];
             }
         }
         return mMinor;
