@@ -208,7 +208,7 @@ public class Matrix {
         Matrix tempMatrix = new Matrix(this.row(), this.col());
         for (int i = 0; i < this.row(); i++) {
             for (int j = 0; j < this.col(); j++) {
-                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * minor(this, i, j).determinantByCofactor().value;
+                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * this.minor(i, j).determinantByCofactor().value;
             }
         }
         tempMatrix.transpose();
@@ -301,7 +301,7 @@ public class Matrix {
     }
 
     public void transpose() {
-        // diasumsikan matriks persegi
+        // Diasumsikan matriks persegi
         for (int i = 0; i < this.row() - 1; i++) {
             for (int j = i + 1; j < this.col(); j++) {
                 double temp = this.matrix[i][j];
@@ -311,21 +311,21 @@ public class Matrix {
         }
     }
 
-    public static Matrix minor(Matrix original, int col, int row) {
-        Matrix mMinor = new Matrix(original.row() - 1, original.col() - 1);
+    public Matrix minor(int col, int row) {
+        Matrix mMinor = new Matrix(this.row() - 1, this.col() - 1);
         int x = 0;
-        for (int i = 0; i < original.row(); i++) {
+        for (int i = 0; i < this.row(); i++) {
             if (i == row) {
                 x = 1;
                 continue;
             }
             int y = 0;
-            for (int j = 0; j < original.col(); j++) {
+            for (int j = 0; j < this.col(); j++) {
                 if (j == col) {
                     y = 1;
                     continue;
                 }
-                mMinor.matrix[i - x][j - y] = original.matrix[i][j];
+                mMinor.matrix[i - x][j - y] = this.matrix[i][j];
             }
         }
         return mMinor;
