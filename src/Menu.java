@@ -139,12 +139,13 @@ public class Menu {
                 Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
                 if (determinantSubMenuChoice == 1) {
                     double detAugMatrix = augMatrix.determinantByCofactor().value;
-                    System.out.println(detAugMatrix);
+                    System.out.println("Determinan: " + detAugMatrix + "\n");
+                    Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
                 } else if (determinantSubMenuChoice == 2) {
                     double detAugMatrix = augMatrix.determinantByReduction().value;
-                    System.out.println(detAugMatrix);
+                    System.out.println("Determinan: " + detAugMatrix + "\n");
+                    Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
                 }
-                System.out.println();
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan nama file input: ");
                 userInput.nextLine();
@@ -155,19 +156,20 @@ public class Menu {
 
                     if (determinantSubMenuChoice == 1) {
                         double detAugMatrix = augMatrix_file.determinantByCofactor().value;
-                        System.out.println(detAugMatrix);
+                        System.out.println("Determinan: " + detAugMatrix + "\n");
+                        Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
+
                     } else if (determinantSubMenuChoice == 2) {
                         double detAugMatrix = augMatrix_file.determinantByReduction().value;
-                        System.out.println(detAugMatrix);
+                        System.out.println("Determinan: " + detAugMatrix + "\n");
+                        Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
                     }
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan: " + e.getMessage());
                     continue;
                 }
-                System.out.println();
 
             } else if (inputChoice == 3) {
-                System.out.println();
                 break;
             }
 
@@ -225,14 +227,6 @@ public class Menu {
                     if (inverseSubMenuChoice == 1){
                         solution = augMatrix_file.inverse();
                     }
-
-                    // if (determinantSubMenuChoice == 1) {
-                    //     double detAugMatrix = Matrix.determinantByCofactor(augMatrix_file);
-                    //     System.out.println(detAugMatrix);
-                    // } else if (determinantSubMenuChoice == 2) {
-                    //     double detAugMatrix = Matrix.determinantByReduction(augMatrix_file);
-                    //     System.out.println(detAugMatrix);
-                    // }
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan: " + e.getMessage());
                     continue;
