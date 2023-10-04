@@ -163,6 +163,7 @@ public class Menu {
             } else if (determinantSubMenuChoice == 2) {
                 detAugMatrix = augMatrix.determinantByReduction();
             }
+            
             detAugMatrix.print();
             Savetofile.saveResultToFile(detAugMatrix.toString(), "src/test/output");
         }
