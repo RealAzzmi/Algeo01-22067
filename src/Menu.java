@@ -349,48 +349,49 @@ public class Menu {
     }
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
-        while (true) {
-            System.out.print("Masukan lokasi file input(misal: input.txt): ");
-            userInput.nextLine();
+        while(true){
+        System.out.print("Masukan lokasi file input: ");
+        userInput.nextLine();
 
             String fileName = userInput.nextLine();
             try {
                 File inputFile = new File(fileName);
                 Scanner fileInput = new Scanner(new FileInputStream(inputFile));
 
-                Matrix matrixData = new Matrix(4, 4);
-                int row = 0;
-                while (fileInput.hasNextLine() && row < 4) {
-                    String line = fileInput.nextLine();
-                    String[] elements = line.trim().split("\\s+");
-                    for (int col = 0; col < Math.min(elements.length, 4); col++) {
-                        matrixData.matrix[row][col] = Double.parseDouble(elements[col]);
-                    }
-                    row++;
-                }
-                Matrix matrixCoeff = new Matrix(16, 1);
-                int index = 0;
-                for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        matrixCoeff.matrix[index][0] = matrixData.matrix[i][j];
-                        index++;
-                    }
-                }
-                double a, b;
-                String lastline = fileInput.nextLine();
-                fileInput.close();
-                String[] elementss = lastline.trim().split("\\s+");
-                a = Double.parseDouble(elementss[0]);
-                b = Double.parseDouble(elementss[1]);
-                Bicubic.prepare();
-                double result = Bicubic.approximate(matrixCoeff, a, b);
-                System.out.println("Aproksimasinya: " + result);
-            } catch (FileNotFoundException e) {
-                System.err.println("File tidak ditemukan " + e.getMessage());
+        Matrix matrixData = new Matrix(4,4);
+        int row = 0;
+        while ( fileInput.hasNextLine()&& row < 4) {
+            String line = fileInput.nextLine();
+            String[] elements = line.trim().split("\\s+");
+            for (int col = 0; col < Math.min(elements.length, 4); col++) {
+                matrixData.matrix[row][col] = Double.parseDouble(elements[col]);
             }
-            break;
+            row++;
         }
+        Matrix matrixCoeff = new Matrix(16,1);
+        int index =0;
+        for(int i =0;i<4;i++){
+            for(int j =0;j<4;j++){
+                matrixCoeff.matrix[index][0] = matrixData.matrix[i][j]; 
+                index++;
+            }
+        }
+        double a,b ;
+        String lastline = fileInput.nextLine();
+        fileInput.close();
+        String[] elementss = lastline.trim().split("\\s+");
+        a = Double.parseDouble(elementss[0]);
+        b = Double.parseDouble(elementss[1]);
+        Bicubic.prepare();
+        double result = Bicubic.approximate(matrixCoeff, a, b);
+        System.out.println("Aproksimasinya: "+ result);
     }
+    catch(FileNotFoundException e){
+        System.err.println("File tidak ditemukan " + e.getMessage());
+    }
+    break;
+}
+}
 
     public static void solveResizeImage(Scanner userInput) {
         while (true) {
