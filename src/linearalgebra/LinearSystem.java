@@ -157,8 +157,9 @@ public class LinearSystem {
 
     public Solution solveInverse() {
         Solution iCoeff = this.coefficient.inverse();
-        if (iCoeff.type == SolutionType.SINGULAR)
+        if (iCoeff.type == SolutionType.SINGULAR || iCoeff.type == SolutionType.UNDEFINED)
             return iCoeff;
+
 
         Matrix solution = Matrix.multiplyMatrix(iCoeff.solution, this.constant);
         return new Solution(SolutionType.UNIQUE, solution);
