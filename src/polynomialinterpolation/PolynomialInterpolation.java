@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
 import linearalgebra.Solution;
+import linearalgebra.SolutionType;
 
 public class PolynomialInterpolation {
-     ArrayList<Double> x = new ArrayList<>();
+    ArrayList<Double> x = new ArrayList<>();
     ArrayList<Double> y = new ArrayList<>();
     public Matrix coefficient;
 
@@ -15,10 +16,12 @@ public class PolynomialInterpolation {
         this.x.add(a);
         this.y.add(b);
     }
+
     public void clear() {
         x.clear();
         y.clear();
     }
+
     public void run() {
         int totalPoint = x.size();
         Matrix augmented = new Matrix(totalPoint, totalPoint + 1);
@@ -32,13 +35,13 @@ public class PolynomialInterpolation {
         }
         coefficient = new LinearSystem(augmented).gauss().solution;
     }
+
     public Solution approximate(double x) {
         int totalPoint = this.x.size();
         double result = 0;
         for (int i = 0; i < this.x.size(); ++i) {
             result += coefficient.matrix[i][0] * Math.pow(x, totalPoint - 1 - i);
         }
-        return new Solution(SolutionType.OTHER,result);
+        return new Solution(SolutionType.OTHER, result);
     }
-    
 }
