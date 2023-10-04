@@ -44,4 +44,14 @@ public class PolynomialInterpolation {
         }
         return new Solution(SolutionType.OTHER, result);
     }
+
+    public void print() {
+        int totalPoint = this.x.size();
+        String equation = "";
+        for (int i = 0; i < totalPoint - 1; ++i) {
+            equation += (String.format("%fx^{%d} + ", coefficient.matrix[i][0], totalPoint - 1 - i));
+        }
+        equation +=  (String.format("%f", coefficient.matrix[totalPoint - 1][0]));
+        System.out.println(equation);
+    }
 }

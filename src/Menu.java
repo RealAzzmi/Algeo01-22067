@@ -251,6 +251,18 @@ public class Menu {
             System.out.print("Pilih jenis input: ");
             int inputChoice = userInput.nextInt();
             System.out.println();
+
+            while (inputChoice > 3 || inputChoice < 1) {
+                System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
+                inputChoice = userInput.nextInt();
+                System.out.println();
+            }
+
+            if (inputChoice == 3) {
+                System.out.println();
+                break;
+            }
+
             if (inputChoice == 1) {
                 System.out.println("Masukan nilai n: ");
                 int n = userInput.nextInt();
@@ -262,7 +274,9 @@ public class Menu {
                     solverPolynom.addPoint(x, y);
                 }
                 double val = userInput.nextDouble();
+                System.out.println("Val is " + val);
                 solverPolynom.run();
+                solverPolynom.print();
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
             } else if (inputChoice == 2) {
@@ -286,6 +300,7 @@ public class Menu {
                     double x = Double.parseDouble(element[0]);
                     fileInput.close();
                     solverPolynom.run();
+                    solverPolynom.print();
                     Solution solution = solverPolynom.approximate(x);
                     solution.print();
 
