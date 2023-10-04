@@ -256,7 +256,7 @@ public class Matrix {
 
             while (lastRow >= 0 && augmented.matrix[lastRow][currentColumn] != 1)
                 --lastRow;
-            if (lastRow <= 0)
+            if (lastRow < 0)
                 continue;
 
             for (int above = 0; above < lastRow; ++above) {
@@ -266,6 +266,16 @@ public class Matrix {
                 augmented.subtractRowFromRow(above, lastRow, multiple);
             }
         }
+        // Cek jika [I | A]. Jika tidak, maka matriks singular
+        boolean isValid = true;
+        for (int i = 0; i < order && isValid; ++i) {
+            for (int j = 0; j < order && isValid; ++j) {
+                if ((i == j && augmented.matrix[i][j] != 1) || (i != j && augmented.matrix[i][j] != 0)) isValid = false;
+            }
+        }
+        if (!isValid) return new Solution(SolutionType.SINGULAR);
+
+        // Jika iya, return inversenya.
         Matrix result = new Matrix(order, order);
         for (int i = 0; i < order; ++i) {
             for (int j = 0; j < order; ++j) {
