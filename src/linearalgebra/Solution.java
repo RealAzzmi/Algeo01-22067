@@ -89,8 +89,7 @@ public class Solution {
             result.append("Matriks bukan matriks persegi.\n");
          } 
         else if (this.type == SolutionType.OTHER) {
-            result.append(message);
-            result.append("\n");
+            if (message != null) result.append(message);
             result.append(value);
         } else {
             result.append("Solution tidak terdefinisi\n");

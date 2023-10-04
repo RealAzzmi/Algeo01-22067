@@ -27,7 +27,7 @@ public class Menu {
             int linearSubMenuChoice = userInput.nextInt();
             System.out.println();
 
-            while (linearSubMenuChoice > 5 || linearSubMenuChoice < 1){
+            while (linearSubMenuChoice > 5 || linearSubMenuChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 linearSubMenuChoice = userInput.nextInt();
                 System.out.println();
@@ -44,8 +44,7 @@ public class Menu {
             System.out.print("Pilih jenis input: ");
             int inputChoice = userInput.nextInt();
 
-
-            while (inputChoice > 4 || inputChoice < 1){
+            while (inputChoice > 4 || inputChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 linearSubMenuChoice = userInput.nextInt();
                 System.out.println();
@@ -87,11 +86,11 @@ public class Menu {
             } else if (linearSubMenuChoice == 3) {
                 solution = ls.solveInverse();
                 solution.print();
-            } else if (linearSubMenuChoice == 4) { 
+            } else if (linearSubMenuChoice == 4) {
                 solution = ls.cramer();
                 solution.print();
             }
-            
+
             String resultString = solution.toString();
 
             String resultFolderName = "src/test/output";
@@ -101,7 +100,7 @@ public class Menu {
     }
 
     public static void solveDeterminant(Scanner userInput) {
-        while(true) {
+        while (true) {
             System.out.println("Metode:");
             System.out.println("1. Metode Kofaktor");
             System.out.println("2. Metode Reduksi");
@@ -110,7 +109,7 @@ public class Menu {
             int determinantSubMenuChoice = userInput.nextInt();
             System.out.println();
 
-            while (determinantSubMenuChoice > 3 || determinantSubMenuChoice < 1){
+            while (determinantSubMenuChoice > 3 || determinantSubMenuChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 determinantSubMenuChoice = userInput.nextInt();
                 System.out.println();
@@ -128,42 +127,27 @@ public class Menu {
             int inputChoice = userInput.nextInt();
             System.out.println();
 
-
-            while (inputChoice > 3 || inputChoice < 1){
+            while (inputChoice > 3 || inputChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 determinantSubMenuChoice = userInput.nextInt();
                 System.out.println();
             }
 
+            if (inputChoice == 3) {
+                System.out.println();
+                break;
+            }
+
+            Matrix augMatrix = null;
             if (inputChoice == 1) {
-                Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
-                if (determinantSubMenuChoice == 1) {
-                    double detAugMatrix = augMatrix.determinantByCofactor().value;
-                    System.out.println("Determinan: " + detAugMatrix + "\n");
-                    Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
-                } else if (determinantSubMenuChoice == 2) {
-                    double detAugMatrix = augMatrix.determinantByReduction().value;
-                    System.out.println("Determinan: " + detAugMatrix + "\n");
-                    Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
-                }
+                augMatrix = Matrix.getInputMatrixFromUser(userInput);
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan nama file input: ");
                 userInput.nextLine();
                 String inputFileName = userInput.nextLine();
 
                 try {
-                    Matrix augMatrix_file = Matrix.getInputMatrixFromFile(inputFileName);
-
-                    if (determinantSubMenuChoice == 1) {
-                        double detAugMatrix = augMatrix_file.determinantByCofactor().value;
-                        System.out.println("Determinan: " + detAugMatrix + "\n");
-                        Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
-
-                    } else if (determinantSubMenuChoice == 2) {
-                        double detAugMatrix = augMatrix_file.determinantByReduction().value;
-                        System.out.println("Determinan: " + detAugMatrix + "\n");
-                        Savetofile.saveResultToFile("Determinan: " + detAugMatrix + "\n", "src/test/output");
-                    }
+                    augMatrix = Matrix.getInputMatrixFromFile(inputFileName);
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan: " + e.getMessage());
                     continue;
@@ -173,12 +157,20 @@ public class Menu {
                 break;
             }
 
+            Solution detAugMatrix = null;
+            if (determinantSubMenuChoice == 1) {
+                detAugMatrix = augMatrix.determinantByCofactor();
+            } else if (determinantSubMenuChoice == 2) {
+                detAugMatrix = augMatrix.determinantByReduction();
+            }
+            detAugMatrix.print();
+            Savetofile.saveResultToFile(detAugMatrix.toString(), "src/test/output");
         }
 
     }
 
     public static void solveInverse(Scanner userInput) {
-        while(true){
+        while (true) {
             System.out.println("Metode:");
             System.out.println("1. Metode Adjoint (harus matriks persegi)");
             System.out.println("2. Metode OBE");
@@ -186,7 +178,7 @@ public class Menu {
             int inverseSubMenuChoice = userInput.nextInt();
             System.out.println();
 
-            while (inverseSubMenuChoice > 2 || inverseSubMenuChoice < 1){
+            while (inverseSubMenuChoice > 2 || inverseSubMenuChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 inverseSubMenuChoice = userInput.nextInt();
                 System.out.println();
@@ -199,8 +191,7 @@ public class Menu {
             int inputChoice = userInput.nextInt();
             System.out.println();
 
-
-            while (inputChoice > 4 || inputChoice < 1){
+            while (inputChoice > 4 || inputChoice < 1) {
                 System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
                 inputChoice = userInput.nextInt();
                 System.out.println();
@@ -210,10 +201,9 @@ public class Menu {
 
             if (inputChoice == 1) {
                 Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
-                if (inverseSubMenuChoice == 1){
+                if (inverseSubMenuChoice == 1) {
                     System.out.println("Sedang dalam pengembangan");
-                }
-                else if (inverseSubMenuChoice == 2){
+                } else if (inverseSubMenuChoice == 2) {
                     solution = augMatrix.inverse();
                     solution.print();
                 }
@@ -224,7 +214,7 @@ public class Menu {
 
                 try {
                     Matrix augMatrix_file = Matrix.getInputMatrixFromFile(inputFileName);
-                    if (inverseSubMenuChoice == 1){
+                    if (inverseSubMenuChoice == 1) {
                         solution = augMatrix_file.inverse();
                     }
                 } catch (FileNotFoundException e) {
@@ -253,7 +243,7 @@ public class Menu {
     }
 
     public static void solveMultipleLinearRegression(Scanner userInput) {
-        while(true){
+        while (true) {
             System.out.println("1. Input dari keyboard");
             System.out.println("2. Input dari file (.txt)");
             System.out.println("3. Kembali");
@@ -261,7 +251,7 @@ public class Menu {
             int inputChoice = userInput.nextInt();
             System.out.println();
 
-            if(inputChoice == 1){
+            if (inputChoice == 1) {
                 System.out.println("Masukkan matriks nya (x1,x2,..,xn) dan y_i:");
                 int row_count, col_count;
                 System.out.println("Jumlah baris:");
@@ -282,7 +272,7 @@ public class Menu {
                 int col_count_est = col_count - 1;
                 Matrix estimateMatrix = new Matrix(col_count_est, 1);
                 for (int i = 0; i < col_count_est; i++) {
-                    for (int j = 0; j < 1; j++){
+                    for (int j = 0; j < 1; j++) {
                         estimateMatrix.matrix[i][j] = userInput.nextDouble();
                     }
                 }
@@ -300,12 +290,13 @@ public class Menu {
                 System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
 
                 // Save the equation to a file
-                Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n" + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
+                Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
+                        + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
 
                 break;
             }
 
-            else if (inputChoice == 2){
+            else if (inputChoice == 2) {
                 System.out.print("Masukkan nama file input: ");
                 userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
                 String inputFileName = userInput.nextLine();
@@ -340,7 +331,8 @@ public class Menu {
                     System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
 
                     // Save the equation to a file
-                    Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n" + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
+                    Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
+                            + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
 
                     break;
                 } catch (FileNotFoundException e) {
@@ -357,52 +349,51 @@ public class Menu {
     }
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
-        while(true){
-        System.out.print("Masukan lokasi file input(misal: input.txt): ");
-        userInput.nextLine();
+        while (true) {
+            System.out.print("Masukan lokasi file input(misal: input.txt): ");
+            userInput.nextLine();
 
-        String fileName = userInput.nextLine();
-        try {
-        File inputFile = new File(fileName);
-        Scanner fileInput = new Scanner(new FileInputStream(inputFile));
+            String fileName = userInput.nextLine();
+            try {
+                File inputFile = new File(fileName);
+                Scanner fileInput = new Scanner(new FileInputStream(inputFile));
 
-        Matrix matrixData = new Matrix(4,4);
-        int row = 0;
-        while ( fileInput.hasNextLine()&& row < 4) {
-            String line = fileInput.nextLine();
-            String[] elements = line.trim().split("\\s+");
-            for (int col = 0; col < Math.min(elements.length, 4); col++) {
-                matrixData.matrix[row][col] = Double.parseDouble(elements[col]);
+                Matrix matrixData = new Matrix(4, 4);
+                int row = 0;
+                while (fileInput.hasNextLine() && row < 4) {
+                    String line = fileInput.nextLine();
+                    String[] elements = line.trim().split("\\s+");
+                    for (int col = 0; col < Math.min(elements.length, 4); col++) {
+                        matrixData.matrix[row][col] = Double.parseDouble(elements[col]);
+                    }
+                    row++;
+                }
+                Matrix matrixCoeff = new Matrix(16, 1);
+                int index = 0;
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        matrixCoeff.matrix[index][0] = matrixData.matrix[i][j];
+                        index++;
+                    }
+                }
+                double a, b;
+                String lastline = fileInput.nextLine();
+                fileInput.close();
+                String[] elementss = lastline.trim().split("\\s+");
+                a = Double.parseDouble(elementss[0]);
+                b = Double.parseDouble(elementss[1]);
+                Bicubic.prepare();
+                double result = Bicubic.approximate(matrixCoeff, a, b);
+                System.out.println("Aproksimasinya: " + result);
+            } catch (FileNotFoundException e) {
+                System.err.println("File tidak ditemukan " + e.getMessage());
             }
-            row++;
+            break;
         }
-        Matrix matrixCoeff = new Matrix(16,1);
-        int index =0;
-        for(int i =0;i<4;i++){
-            for(int j =0;j<4;j++){
-                matrixCoeff.matrix[index][0] = matrixData.matrix[i][j]; 
-                index++;
-            }
-        }
-        double a,b ;
-        String lastline = fileInput.nextLine();
-        fileInput.close();
-        String[] elementss = lastline.trim().split("\\s+");
-        a = Double.parseDouble(elementss[0]);
-        b = Double.parseDouble(elementss[1]);
-        Bicubic.prepare();
-        double result = Bicubic.approximate(matrixCoeff, a, b);
-        System.out.println("Aproksimasinya: "+ result);
     }
-    catch(FileNotFoundException e){
-        System.err.println("File tidak ditemukan " + e.getMessage());
-    }
-    break;
-}
-}
 
     public static void solveResizeImage(Scanner userInput) {
-        while(true){
+        while (true) {
             System.out.println("1. Resize Gambar");
             System.out.println("2. Keluar");
             System.out.print("Pilih menu: ");
@@ -410,7 +401,7 @@ public class Menu {
             userInput.nextLine();
             System.out.println();
 
-            if(resizeImageChoice == 1){
+            if (resizeImageChoice == 1) {
                 System.out.print("Masukkan letak file gambar: ");
                 String inputFileName = userInput.nextLine();
 
@@ -426,11 +417,9 @@ public class Menu {
                 resizer.resize(factor, outputFileName);
                 System.out.println("Gambar berhasil diresize dan disimpan sebagai " + outputFileName);
                 break;
-            }
-            else{
+            } else {
                 break;
             }
-
 
         }
     }
