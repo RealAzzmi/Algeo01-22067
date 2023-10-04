@@ -8,6 +8,7 @@ enum SolutionType {
     // Inverse Matrix Solution Type
     SINGULAR,
     UNDEFINED,
+    INVERTIBLE,
     //
     OTHER
 }
