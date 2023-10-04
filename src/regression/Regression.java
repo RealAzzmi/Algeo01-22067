@@ -43,7 +43,7 @@ public class Regression {
         return solution;
     }
 
-    public void printRegressionEquation(Matrix solution) {
+    public String getRegressionEquation(Matrix solution) {
         int n = solution.row() - 1;
         StringBuilder equation = new StringBuilder("y = ");
     
@@ -58,8 +58,9 @@ public class Regression {
             }
         }
     
-        System.out.println(equation.toString());
+        return equation.toString();
     }
+    
 
     public static double estimateY(Matrix coefficients, Matrix inputMatrix) {
         int n = coefficients.row() - 1;
