@@ -106,8 +106,9 @@ public class Matrix {
     }
 
     public Solution determinantByCofactor() {
-        if (this.row() != this.col())
+        if (this.row() != this.col()) {
             return new Solution(SolutionType.UNDEFINED);
+        }
 
         int n = this.matrix.length;
         if (n == 1) {
@@ -163,37 +164,40 @@ public class Matrix {
         return true;
     }
 
-    public static double determinantByReduction(Matrix m) {
-        if (isUpperTriangular(m) || isLowerTriangular(m)) {
+    public Solution determinantByReduction() {
+        if (this.row() != this.col()) {
+            return new Solution(SolutionType.UNDEFINED);
+        }
+        if (isUpperTriangular(this) || isLowerTriangular(this)) {
             double det = 1;
-            for (int i = 0; i < m.row(); i++) {
-                det = det * m.matrix[i][i];
+            for (int i = 0; i < this.row(); i++) {
+                det *= this.matrix[i][i];
             }
-            return det;
+            return new Solution(SolutionType.OTHER, det);
         } else {
             double det = 1;
-            for (int j = 0; j < m.col() - 1; j++) {
-                for (int i = m.row() - 1; i >= j; i--) {
-                    for (int k = m.matrix.length - 1; k >= j; k--) {
-                        double tmp1 = m.matrix[i][j];
-                        double tmp2 = m.matrix[k][j];
+            for (int j = 0; j < this.col() - 1; j++) {
+                for (int i = this.row() - 1; i >= j; i--) {
+                    for (int k = this.matrix.length - 1; k >= j; k--) {
+                        double tmp1 = this.matrix[i][j];
+                        double tmp2 = this.matrix[k][j];
                         if (Math.abs(tmp1) < Math.abs(tmp2)) {
-                            m.swapRow(i, k);
-                            det = det * -1;
+                            this.swapRow(i, k);
+                            det = -det;
                         }
                     }
                 }
-                for (int l = m.row() - 1; l > j; l--) {
-                    if (m.matrix[l][j] == 0) {
+                for (int l = this.row() - 1; l > j; l--) {
+                    if (this.matrix[l][j] == 0) {
                         continue;
                     }
-                    m.subtractRowFromRow(l, l - 1, m.matrix[l][j] / m.matrix[l - 1][j]);
+                    this.subtractRowFromRow(l, l - 1, this.matrix[l][j] / this.matrix[l - 1][j]);
                 }
             }
-            for (int i = 0; i < m.col(); i++) {
-                det = det * m.matrix[i][i];
+            for (int i = 0; i < this.col(); i++) {
+                det *= this.matrix[i][i];
             }
-            return det;
+            return new Solution(SolutionType.OTHER, det);
         }
     }
 

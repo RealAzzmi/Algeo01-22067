@@ -131,7 +131,7 @@ public class Menu {
                     double detAugMatrix = augMatrix.determinantByCofactor().value;
                     System.out.println(detAugMatrix);
                 } else if (determinantSubMenuChoice == 2) {
-                    double detAugMatrix = Matrix.determinantByReduction(augMatrix);
+                    double detAugMatrix = augMatrix.determinantByReduction().value;
                     System.out.println(detAugMatrix);
                 }
                 System.out.println();
@@ -147,7 +147,7 @@ public class Menu {
                         double detAugMatrix = augMatrix_file.determinantByCofactor().value;
                         System.out.println(detAugMatrix);
                     } else if (determinantSubMenuChoice == 2) {
-                        double detAugMatrix = Matrix.determinantByReduction(augMatrix_file);
+                        double detAugMatrix = augMatrix_file.determinantByReduction().value;
                         System.out.println(detAugMatrix);
                     }
                 } catch (FileNotFoundException e) {
