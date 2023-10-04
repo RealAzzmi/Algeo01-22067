@@ -6,17 +6,18 @@ enum SolutionType {
     UNIQUE,
     INFINITE,
     // Inverse Matrix Solution Type
-    SINGULAR,
-    UNDEFINED,
-    INVERTIBLE,
-    //
-    OTHER
+    SINGULAR, // Jika matriks persegin tidak mempunyai inverse
+    UNDEFINED, // Jika bukan matriks persegi
+    INVERTIBLE, // Jika matriks persegi mempunyai inverse
+    // Others
+    OTHER // Jika tidak termasuk kategori di atas
 }
 
 public class Solution {
     public SolutionType type;
     public Matrix solution;
     public String message;
+    public double value;
 
     public Solution(SolutionType type) {
         this.type = type;
@@ -30,6 +31,11 @@ public class Solution {
     public Solution(SolutionType type, String message) {
         this.type = type;
         this.message = message;
+    }
+
+    public Solution(SolutionType type, double value) {
+        this.type = type;
+        this.value = value;
     }
 
     public String toString() {
@@ -85,6 +91,7 @@ public class Solution {
         else if (this.type == SolutionType.OTHER) {
             result.append(message);
             result.append("\n");
+            result.append(value);
         } else {
             result.append("Solution tidak terdefinisi\n");
         }

@@ -128,10 +128,10 @@ public class Menu {
             if (inputChoice == 1) {
                 Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
                 if (determinantSubMenuChoice == 1) {
-                    double detAugMatrix = Matrix.determinantByCofactor(augMatrix);
+                    double detAugMatrix = augMatrix.determinantByCofactor().value;
                     System.out.println(detAugMatrix);
                 } else if (determinantSubMenuChoice == 2) {
-                    double detAugMatrix = Matrix.determinantByReduction(augMatrix);
+                    double detAugMatrix = augMatrix.determinantByReduction().value;
                     System.out.println(detAugMatrix);
                 }
                 System.out.println();
@@ -144,10 +144,10 @@ public class Menu {
                     Matrix augMatrix_file = Matrix.getInputMatrixFromFile(inputFileName);
 
                     if (determinantSubMenuChoice == 1) {
-                        double detAugMatrix = Matrix.determinantByCofactor(augMatrix_file);
+                        double detAugMatrix = augMatrix_file.determinantByCofactor().value;
                         System.out.println(detAugMatrix);
                     } else if (determinantSubMenuChoice == 2) {
-                        double detAugMatrix = Matrix.determinantByReduction(augMatrix_file);
+                        double detAugMatrix = augMatrix_file.determinantByReduction().value;
                         System.out.println(detAugMatrix);
                     }
                 } catch (FileNotFoundException e) {
@@ -300,7 +300,7 @@ public class Menu {
     }
 
     public static void solvePolynomial(Scanner userInput) {
-
+        //
     }
 
     public static void solveMultipleLinearRegression(Scanner userInput) {
@@ -422,8 +422,10 @@ public class Menu {
     }
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
+        while(true){
         System.out.print("Masukan lokasi file input(misal: input.txt): ");
         userInput.nextLine();
+
         String fileName = userInput.nextLine();
         try {
         File inputFile = new File(fileName);
@@ -460,6 +462,8 @@ public class Menu {
     catch(FileNotFoundException e){
         System.err.println("File tidak ditemukan " + e.getMessage());
     }
+    break;
+}
 }
 
     public static void solveResizeImage(Scanner userInput) {
@@ -485,7 +489,6 @@ public class Menu {
                 Resizeimage resizer = new resizeimage.Resizeimage();
                 resizer.load(inputFileName);
                 resizer.resize(factor, outputFileName);
-
                 System.out.println("Gambar berhasil diresize dan disimpan sebagai " + outputFileName);
                 break;
             }
