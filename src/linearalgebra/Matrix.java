@@ -9,36 +9,43 @@ import java.util.Scanner;
 
 public class Matrix {
     public double[][] matrix;
-    
 
     public Matrix(int row, int col) {
         this.matrix = new double[row][col];
     }
-    public Matrix(double[][] newMatrix){
+
+    public Matrix(double[][] newMatrix) {
         this.matrix = newMatrix;
     }
-    public void setMatrix(double[][] newMatrix){
+
+    public void setMatrix(double[][] newMatrix) {
         this.matrix = newMatrix;
     }
+
     public int row() {
         return this.matrix.length;
     }
+
     public int col() {
         return this.matrix[0].length;
     }
+
     public void addRowFromRow(int toRow, int fromRow, double multiple) {
         for (int i = 0; i < this.col(); ++i) {
             this.matrix[toRow][i] += multiple * this.matrix[fromRow][i];
         }
     }
+
     public void subtractRowFromRow(int toRow, int fromRow, double multiple) {
         addRowFromRow(toRow, fromRow, -multiple);
     }
+
     public void addColumnFromColumn(int toColumn, int fromColumn, double multiple) {
         for (int i = 0; i < this.row(); ++i) {
             this.matrix[i][toColumn] += multiple * this.matrix[i][fromColumn];
         }
     }
+
     public void subtractColumnFromColumn(int toColumn, int fromColumn, double multiple) {
         addColumnFromColumn(toColumn, fromColumn, -multiple);
     }
@@ -56,7 +63,8 @@ public class Matrix {
     }
 
     public void swapRow(int firstRow, int secondRow) {
-        if (firstRow == secondRow) return;
+        if (firstRow == secondRow)
+            return;
         for (int i = 0; i < this.col(); ++i) {
             double temp = this.matrix[firstRow][i];
             this.matrix[firstRow][i] = this.matrix[secondRow][i];
@@ -65,7 +73,8 @@ public class Matrix {
     }
 
     public void swapColumn(int firstColumn, int secondColumn) {
-        if (firstColumn == secondColumn) return;
+        if (firstColumn == secondColumn)
+            return;
         for (int i = 0; i < this.row(); ++i) {
             double temp = this.matrix[i][firstColumn];
             this.matrix[i][firstColumn] = this.matrix[i][secondColumn];
@@ -97,13 +106,15 @@ public class Matrix {
     }
 
     public Solution determinantByCofactor() {
-        if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED);
+        if (this.row() != this.col())
+            return new Solution(SolutionType.UNDEFINED);
 
         int n = this.matrix.length;
         if (n == 1) {
             return new Solution(SolutionType.OTHER, this.matrix[0][0]);
         } else if (n == 2) {
-            return new Solution(SolutionType.OTHER, this.matrix[0][0] * this.matrix[1][1] - this.matrix[0][1] * this.matrix[1][0]);
+            return new Solution(SolutionType.OTHER,
+                    this.matrix[0][0] * this.matrix[1][1] - this.matrix[0][1] * this.matrix[1][0]);
         }
 
         double det = 0;
@@ -123,102 +134,110 @@ public class Matrix {
         }
         return new Solution(SolutionType.OTHER, det);
     }
-    
-    public static boolean isLowerTriangular(Matrix m){
-        if (m.row()< 2){
-        return false;
+
+    public static boolean isLowerTriangular(Matrix m) {
+        if (m.row() < 2) {
+            return false;
         }
         for (int i = 0; i < m.row(); i++) {
             for (int j = 0; j < i; j++) {
-                if (m.matrix[i][j] != 0){
+                if (m.matrix[i][j] != 0) {
                     return false;
+                }
             }
         }
+        return true;
     }
-    return true;
-    }
-    public static boolean isUpperTriangular(Matrix m){
-        if (m.row()< 2){
-        return false;
+
+    public static boolean isUpperTriangular(Matrix m) {
+        if (m.row() < 2) {
+            return false;
         }
-        for(int i = 0; i < m.row(); i++) {
-            for (int j = i+1; j < m.col(); j++) {
-                if (m.matrix[i][j] != 0){
+        for (int i = 0; i < m.row(); i++) {
+            for (int j = i + 1; j < m.col(); j++) {
+                if (m.matrix[i][j] != 0) {
                     return false;
+                }
             }
         }
+        return true;
     }
-    return true;
-    }
+
     public static double determinantByReduction(Matrix m) {
-        if(isUpperTriangular(m) || isLowerTriangular(m)){
-            double det =1;
-            for(int i =0;i<m.row();i++){
-                det=det* m.matrix[i][i];
+        if (isUpperTriangular(m) || isLowerTriangular(m)) {
+            double det = 1;
+            for (int i = 0; i < m.row(); i++) {
+                det = det * m.matrix[i][i];
             }
             return det;
-        }else{
+        } else {
             double det = 1;
-            for(int j = 0; j<m.col()-1;j++){
-                for(int i = m.row() - 1; i >= j; i--) {
+            for (int j = 0; j < m.col() - 1; j++) {
+                for (int i = m.row() - 1; i >= j; i--) {
                     for (int k = m.matrix.length - 1; k >= j; k--) {
-                        double tmp1 =m.matrix[i][j];
-                        double tmp2 =m.matrix[k][j];
-                        if(Math.abs(tmp1) < Math.abs(tmp2)){
+                        double tmp1 = m.matrix[i][j];
+                        double tmp2 = m.matrix[k][j];
+                        if (Math.abs(tmp1) < Math.abs(tmp2)) {
                             m.swapRow(i, k);
-                            det= det*-1;
+                            det = det * -1;
                         }
                     }
                 }
-                for(int l=m.row()-1; l>j ;l--){
-                    if(m.matrix[l][j]==0){
+                for (int l = m.row() - 1; l > j; l--) {
+                    if (m.matrix[l][j] == 0) {
                         continue;
+                    }
+                    m.subtractRowFromRow(l, l - 1, m.matrix[l][j] / m.matrix[l - 1][j]);
                 }
-                m.subtractRowFromRow(l, l-1, m.matrix[l][j]/m.matrix[l-1][j]);
             }
-        }
-        for(int i=0;i<m.col();i++){
-            det= det*m.matrix[i][i];
-        }
-        return det;
+            for (int i = 0; i < m.col(); i++) {
+                det = det * m.matrix[i][i];
+            }
+            return det;
         }
     }
 
     public static Matrix adjoint(Matrix original) {
-        Matrix tempMatrix = new Matrix(original.row(),original.col());
-        for(int i =0;i<original.row();i++){
-            for(int j=0;j<original.col();j++){
-                tempMatrix.matrix[i][j]= Math.pow(-1,i+ j) * minor(original, i, j).determinantByCofactor().value;
+        Matrix tempMatrix = new Matrix(original.row(), original.col());
+        for (int i = 0; i < original.row(); i++) {
+            for (int j = 0; j < original.col(); j++) {
+                tempMatrix.matrix[i][j] = Math.pow(-1, i + j) * minor(original, i, j).determinantByCofactor().value;
             }
         }
         tempMatrix.transpose();
         return tempMatrix;
     }
+
     public Solution inverse() {
-        if (this.row() != this.col()) return new Solution(SolutionType.UNDEFINED);
+        if (this.row() != this.col())
+            return new Solution(SolutionType.UNDEFINED);
         // Isi augmented menjadi [A | I]
         int order = this.matrix.length;
         Matrix augmented = new Matrix(order, 2 * order);
         for (int i = 0; i < order; ++i) {
             for (int j = 0; j < order; ++j) {
                 augmented.matrix[i][j] = this.matrix[i][j];
-                if (i == j) augmented.matrix[i][j + order] = 1;
+                if (i == j)
+                    augmented.matrix[i][j + order] = 1;
             }
         }
-        
+
         // Forward phase (Row echelon)
         int currentRow = 0;
         for (int currentColumn = 0; currentColumn < order; ++currentColumn) {
             int firstRow = currentRow;
-            
-            while (firstRow < order && augmented.matrix[firstRow][currentColumn] == 0) ++firstRow;
-            if (firstRow >= order) continue;
+
+            while (firstRow < order && augmented.matrix[firstRow][currentColumn] == 0)
+                ++firstRow;
+            if (firstRow >= order)
+                continue;
 
             augmented.swapRow(firstRow, currentRow);
-            augmented.divideRow(currentRow, augmented.matrix[currentRow][currentColumn]); 
+            augmented.divideRow(currentRow, augmented.matrix[currentRow][currentColumn]);
 
             for (int below = currentRow + 1; below < order; ++below) {
-                if (augmented.matrix[below][currentColumn] == 0) continue;
+                if (augmented.matrix[below][currentColumn] == 0)
+                    continue;
                 double multiple = augmented.matrix[below][currentColumn] / augmented.matrix[currentRow][currentColumn];
                 augmented.subtractRowFromRow(below, currentRow, multiple);
             }
@@ -228,11 +247,14 @@ public class Matrix {
         for (int currentColumn = 0; currentColumn < order; ++currentColumn) {
             int lastRow = order - 1;
 
-            while (lastRow >= 0 && augmented.matrix[lastRow][currentColumn] != 1) --lastRow;
-            if (lastRow <= 0) continue;
+            while (lastRow >= 0 && augmented.matrix[lastRow][currentColumn] != 1)
+                --lastRow;
+            if (lastRow <= 0)
+                continue;
 
             for (int above = 0; above < lastRow; ++above) {
-                if (augmented.matrix[above][currentColumn] == 0) continue;
+                if (augmented.matrix[above][currentColumn] == 0)
+                    continue;
                 double multiple = augmented.matrix[above][currentColumn] / augmented.matrix[lastRow][currentColumn];
                 augmented.subtractRowFromRow(above, lastRow, multiple);
             }
@@ -240,72 +262,69 @@ public class Matrix {
         Matrix result = new Matrix(order, order);
         for (int i = 0; i < order; ++i) {
             for (int j = 0; j < order; ++j) {
-                result.matrix[i][j] = augmented.matrix[i][j+order];
+                result.matrix[i][j] = augmented.matrix[i][j + order];
             }
         }
         return new Solution(SolutionType.INVERTIBLE, result);
     }
+
     public static Matrix inverseByAdjoint(Matrix m) {
         // Pre kondisi : Matriks harus matriks persegi
         double det = m.determinantByCofactor().value;
 
-        if(det == 0){
+        if (det == 0) {
             // Matriks tidak punya invers
             return null;
-        }
-        else{
+        } else {
             Matrix adjoint = adjoint(m);
-            Matrix inverseMatrix = adjoint.multiplyByNum(1.0/det);
+            Matrix inverseMatrix = adjoint.multiplyByNum(1.0 / det);
             return inverseMatrix;
         }
     }
-    
 
-    public void transpose(){
-        //diasumsikan matriks persegi
-        for (int i =0; i<this.row()-1;i++){
-            for(int j =i+1;j<this.col();j++){
+    public void transpose() {
+        // diasumsikan matriks persegi
+        for (int i = 0; i < this.row() - 1; i++) {
+            for (int j = i + 1; j < this.col(); j++) {
                 double temp = this.matrix[i][j];
-                this.matrix[i][j]=this.matrix[j][i];
-                this.matrix[i][j]= temp;
+                this.matrix[i][j] = this.matrix[j][i];
+                this.matrix[i][j] = temp;
             }
         }
     }
 
-    public static Matrix minor(Matrix original, int col,int row) {
-        Matrix mMinor = new Matrix(original.row()-1, original.col()-1);
-        int x=0;    
-        for(int i=0;i<original.row();i++){
-                if(i==row){
-                    x=1;
+    public static Matrix minor(Matrix original, int col, int row) {
+        Matrix mMinor = new Matrix(original.row() - 1, original.col() - 1);
+        int x = 0;
+        for (int i = 0; i < original.row(); i++) {
+            if (i == row) {
+                x = 1;
+                continue;
+            }
+            int y = 0;
+            for (int j = 0; j < original.col(); j++) {
+                if (j == col) {
+                    y = 1;
                     continue;
                 }
-                int y =0;
-                for(int j=0;j<original.col();j++){
-                    if(j==col){
-                        y=1;
-                        continue;
-                    }
-                    mMinor.matrix[i-x][j-y] = original.matrix[i][j];
-                }
+                mMinor.matrix[i - x][j - y] = original.matrix[i][j];
             }
+        }
         return mMinor;
     }
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-    
+
         for (int i = 0; i < this.row(); ++i) {
             for (int j = 0; j < this.col(); ++j) {
                 result.append(String.format("%5.2f ", this.matrix[i][j]));
             }
             result.append("\n");
         }
-    
+
         return result.toString();
     }
-    
-    
 
     public void print() {
         for (int i = 0; i < this.row(); ++i) {
@@ -315,14 +334,15 @@ public class Matrix {
             System.out.println();
         }
     }
-    public static Matrix multiplyMatrix(Matrix m1,Matrix m2){
-        //prekondisi kolom m1 dan baris m2 sama
-        Matrix m3 = new Matrix(m1.row(),m2.col());
-        for(int i =0 ;i<m1.row();i++){
-            for(int j=0;j<m2.col();j++){
-                m3.matrix[i][j]=0;
-                for(int k=0;k<m1.col();k++){
-                    m3.matrix[i][j]+=m1.matrix[i][k]*m2.matrix[k][j];
+
+    public static Matrix multiplyMatrix(Matrix m1, Matrix m2) {
+        // prekondisi kolom m1 dan baris m2 sama
+        Matrix m3 = new Matrix(m1.row(), m2.col());
+        for (int i = 0; i < m1.row(); i++) {
+            for (int j = 0; j < m2.col(); j++) {
+                m3.matrix[i][j] = 0;
+                for (int k = 0; k < m1.col(); k++) {
+                    m3.matrix[i][j] += m1.matrix[i][k] * m2.matrix[k][j];
                 }
             }
         }
