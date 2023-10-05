@@ -90,7 +90,7 @@ public class Menu {
             }
 
             String resultString = solution.toString();
-            String resultFolderName = "../test/output";
+            String resultFolderName = "test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
 
         }
@@ -162,7 +162,7 @@ public class Menu {
             }
 
             detAugMatrix.print();
-            Savetofile.saveResultToFile(detAugMatrix.toString(), "../test/output");
+            Savetofile.saveResultToFile(detAugMatrix.toString(), "test/output");
         }
 
     }
@@ -233,7 +233,7 @@ public class Menu {
             }
 
             String resultString = solution.toString();
-            String resultFolderName = "../test/output";
+            String resultFolderName = "test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
             solution.print();
         }
@@ -274,7 +274,7 @@ public class Menu {
                 solverPolynom.print();
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
-                Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                Savetofile.saveResultToFile(solution.toString(), "test/output");
                 break;
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan lokasi file: ");
@@ -302,7 +302,7 @@ public class Menu {
                             System.out.print("Taksiran nilai f(x) = ");
                             solution.print();
                             System.out.println();
-                            Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                            Savetofile.saveResultToFile(solution.toString(), "test/output");
                         }
                         
                     }
@@ -362,7 +362,7 @@ public class Menu {
 
                 
                 Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
-                        + "Nilai taksiran y adalah: " + y_estimate, "../test/output");
+                        + "Nilai taksiran y adalah: " + y_estimate, "test/output");
 
                 break;
             }
@@ -400,7 +400,7 @@ public class Menu {
                     System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
 
                     Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
-                            + "Nilai taksiran y adalah: " + y_estimate, "../test/output");
+                            + "Nilai taksiran y adalah: " + y_estimate, "test/output");
 
                     break;
                 } catch (FileNotFoundException e) {
@@ -453,7 +453,7 @@ public class Menu {
                 Bicubic.prepare();
                 double result = Bicubic.approximate(matrixCoeff, a, b);
                 System.out.println("Aproksimasinya: " + result);
-                Savetofile.saveResultToFile("Approksimasinya: "+ result, "../test/output");
+                Savetofile.saveResultToFile("Approksimasinya: "+ result, "test/output");
             } catch (FileNotFoundException e) {
                 System.err.println("File tidak ditemukan " + e.getMessage());
             }
