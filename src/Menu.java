@@ -321,6 +321,17 @@ public class Menu {
             int inputChoice = userInput.nextInt();
             System.out.println();
 
+            while (inputChoice > 3 || inputChoice < 1) {
+                System.out.print("Pilihan tidak valid. Silakan pilih lagi: ");
+                inputChoice = userInput.nextInt();
+                System.out.println();
+            }
+
+            if (inputChoice == 3) {
+                System.out.println();
+                break;
+            }
+
             if (inputChoice == 1) {
                 System.out.println("Masukkan matriks nya (x1,x2,..,xn) dan y_i:");
                 int row_count, col_count;
@@ -363,7 +374,6 @@ public class Menu {
                 Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
                         + "Nilai taksiran y adalah: " + y_estimate, "../test/output");
 
-                break;
             }
 
             else if (inputChoice == 2) {
@@ -401,17 +411,11 @@ public class Menu {
                     Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
                             + "Nilai taksiran y adalah: " + y_estimate, "../test/output");
 
-                    break;
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan: " + e.getMessage());
                     continue;
                 }
             }
-
-            else {
-                break;
-            }
-
         }
     }
 
