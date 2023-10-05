@@ -2,9 +2,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import javax.sound.midi.MidiSystem;
-
 import bicubic.Bicubic;
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
@@ -58,8 +55,8 @@ public class Menu {
                 Matrix augMatrix = Matrix.getInputMatrixFromUser(userInput);
                 ls = new LinearSystem(augMatrix);
             } else if (inputChoice == 2) {
-                System.out.print("Masukkan nama file input: ");
-                userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
+                System.out.print("Masukkan lokasi file: ");
+                userInput.nextLine(); 
                 String inputFileName = userInput.nextLine();
 
                 try {
@@ -93,8 +90,7 @@ public class Menu {
             }
 
             String resultString = solution.toString();
-
-            String resultFolderName = "src/test/output";
+            String resultFolderName = "../test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
 
         }
@@ -143,7 +139,7 @@ public class Menu {
             if (inputChoice == 1) {
                 augMatrix = Matrix.getInputMatrixFromUser(userInput);
             } else if (inputChoice == 2) {
-                System.out.print("Masukkan nama file input: ");
+                System.out.print("Masukkan lokasi file: ");
                 userInput.nextLine();
                 String inputFileName = userInput.nextLine();
 
@@ -166,7 +162,7 @@ public class Menu {
             }
 
             detAugMatrix.print();
-            Savetofile.saveResultToFile(detAugMatrix.toString(), "src/test/output");
+            Savetofile.saveResultToFile(detAugMatrix.toString(), "../test/output");
         }
 
     }
@@ -215,8 +211,8 @@ public class Menu {
             if (inputChoice == 1) {
                 augMatrix = Matrix.getInputMatrixFromUser(userInput);
             } else if (inputChoice == 2) {
-                System.out.print("Masukkan nama file input: ");
-                userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
+                System.out.print("Masukkan lokasi file: ");
+                userInput.nextLine(); 
                 String inputFileName = userInput.nextLine();
 
                 try {
@@ -237,7 +233,7 @@ public class Menu {
             }
 
             String resultString = solution.toString();
-            String resultFolderName = "src/test/output";
+            String resultFolderName = "../test/output";
             Savetofile.saveResultToFile(resultString, resultFolderName);
             solution.print();
         }
@@ -264,7 +260,7 @@ public class Menu {
             }
 
             if (inputChoice == 1) {
-                System.out.println("Masukan nilai n: ");
+                System.out.println("Masukkan nilai n: ");
                 int n = userInput.nextInt();
                 double x, y;
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
@@ -279,7 +275,7 @@ public class Menu {
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
             } else if (inputChoice == 2) {
-                System.out.print("Masukan lokasi file(input.txt): ");
+                System.out.print("Masukkan lokasi file: ");
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
                 userInput.nextLine();
                 double a, b;
@@ -350,29 +346,28 @@ public class Menu {
 
                 String regressionEquation = reg.getRegressionEquation(coefficients);
 
-                // Print the equation
+                
                 System.out.println("Persamaan regresi adalah:");
                 System.out.println(regressionEquation);
 
                 double y_estimate = Regression.estimateY(coefficients, estimateMatrix);
                 System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
 
-                // Save the equation to a file
+                
                 Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
-                        + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
+                        + "Nilai taksiran y adalah: " + y_estimate, "../test/output");
 
                 break;
             }
 
             else if (inputChoice == 2) {
-                System.out.print("Masukkan nama file input: ");
-                userInput.nextLine(); // Membersihkan newline yang tersisa di dalam buffer
+                System.out.print("Masukkan lokasi file: ");
+                userInput.nextLine(); 
                 String inputFileName = userInput.nextLine();
 
                 try {
                     Matrix augMatrix = Matrix.getInputMatrixFromFile(inputFileName);
 
-                    // Display the matrix read from the file
                     System.out.println("Matriks dari file " + inputFileName + ":");
                     System.out.println(augMatrix.toString());
 
@@ -391,16 +386,14 @@ public class Menu {
 
                     String regressionEquation = reg.getRegressionEquation(coefficients);
 
-                    // Print the equation
                     System.out.println("Persamaan regresi adalah:");
                     System.out.println(regressionEquation);
 
                     double y_estimate = Regression.estimateY(coefficients, estimateMatrix);
                     System.out.println("Nilai taksiran y adalah: " + y_estimate + "\n");
 
-                    // Save the equation to a file
                     Savetofile.saveResultToFile("Persamaan regresi adalah: " + regressionEquation + "\n"
-                            + "Nilai taksiran y adalah: " + y_estimate, "src/test/output");
+                            + "Nilai taksiran y adalah: " + y_estimate, "../test/output");
 
                     break;
                 } catch (FileNotFoundException e) {
@@ -418,7 +411,7 @@ public class Menu {
 
     public static void solveBicubicSplineInterpolation(Scanner userInput) {
         while (true) {
-            System.out.print("Masukan lokasi file input: ");
+            System.out.print("Masukkan lokasi file: ");
             userInput.nextLine();
 
             String fileName = userInput.nextLine();
@@ -470,13 +463,13 @@ public class Menu {
             System.out.println();
 
             if (resizeImageChoice == 1) {
-                System.out.print("Masukkan letak file gambar: ");
+                System.out.print("Masukkan lokasi file: ");
                 String inputFileName = userInput.nextLine();
 
                 System.out.print("Masukkan faktor perbesaran: ");
                 double factor = userInput.nextDouble();
 
-                System.out.print("Masukkan letak dan nama file hasil resize: ");
+                System.out.print("Masukkan lokasi dan nama file hasil resize: ");
                 userInput.nextLine();
                 String outputFileName = userInput.nextLine();
                 Bicubic.prepare();
