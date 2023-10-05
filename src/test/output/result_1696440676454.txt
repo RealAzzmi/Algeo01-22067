@@ -1,1 +1,0 @@
-Matriks 1 x 1 tidak dapat diselesaikan dengan metode inverse dengan adjoint walaupun memiliki inverse0.0
