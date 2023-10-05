@@ -274,7 +274,7 @@ public class Menu {
                 solverPolynom.print();
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
-                Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                Savetofile.saveResultToFile(solution.toString(), "test/output");
                 break;
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan lokasi file: ");
@@ -302,7 +302,7 @@ public class Menu {
                             System.out.print("Taksiran nilai f(x) = ");
                             solution.print();
                             System.out.println();
-                            Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                            Savetofile.saveResultToFile(solution.toString(), "test/output");
                         }
                         
                     }
