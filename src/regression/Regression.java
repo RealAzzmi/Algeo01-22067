@@ -1,5 +1,7 @@
 package regression;
 
+import java.text.DecimalFormat;
+
 import linearalgebra.LinearSystem;
 import linearalgebra.Matrix;
 
@@ -46,18 +48,20 @@ public class Regression {
     public String getRegressionEquation(Matrix solution) {
         int n = solution.row() - 1;
         StringBuilder equation = new StringBuilder("y = ");
-    
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.#####");
+
         for (int i = 0; i <= n; ++i) {
             double coefficient = solution.matrix[i][0];
             if (coefficient != 0) {
                 if (i == 0) {
-                    equation.append(coefficient);
+                    equation.append(decimalFormat.format(coefficient));
                 } else {
-                    equation.append(" + ").append(coefficient).append("x").append(i);
+                    equation.append(" + ").append(decimalFormat.format(coefficient)).append("x_{").append(i).append("}");
                 }
             }
         }
-    
+
         return equation.toString();
     }
     
@@ -75,7 +79,8 @@ public class Regression {
             }
         }
 
-        return y;
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        return Double.parseDouble(decimalFormat.format(y));
     }
     
 }
