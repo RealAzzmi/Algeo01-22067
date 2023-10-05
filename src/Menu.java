@@ -264,7 +264,7 @@ public class Menu {
                 int n = userInput.nextInt();
                 double x, y;
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
-                for (int i = 0; i <= n; i++) {
+                for (int i = 0; i < n; i++) {
                     x = userInput.nextDouble();
                     y = userInput.nextDouble();
                     solverPolynom.addPoint(x, y);
