@@ -1,0 +1,4 @@
+Sistem memiliki solusi tak hingga. Print solusi parametrik belum diimplementasikan...
+x_{1} = 7.000000 - -2.000000x_{2} - -3.000000x_{4}
+x_{3} = 1.000000
+x_{5} = 2.000000
