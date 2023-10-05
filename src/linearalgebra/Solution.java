@@ -49,7 +49,7 @@ public class Solution {
                 result.append(String.format("x_{%d} = %f\n", i + 1, solution.matrix[i][0]));
             }
         } else if (this.type == SolutionType.INFINITE) {
-            result.append("Sistem memiliki solusi tak hingga. Print solusi parametrik belum diimplementasikan...\n");
+            result.append("Sistem memiliki solusi tak hingga.\n");
 
             // Backward phase (Reduced row echelon)
             for (int currentColumn = 0; currentColumn < solution.col() - 1; ++currentColumn) {
