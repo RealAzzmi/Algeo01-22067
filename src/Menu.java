@@ -275,7 +275,6 @@ public class Menu {
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
                 Savetofile.saveResultToFile(solution.toString(), "test/output");
-                break;
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan lokasi file: ");
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
@@ -308,7 +307,7 @@ public class Menu {
                     }
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan " + e.getMessage());
-                }break;
+                }
             }
         }
     }
