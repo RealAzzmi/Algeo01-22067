@@ -14,8 +14,9 @@ Repository ini adalah kalkulator matriks yang dibuat dalam bahasa Java untuk men
 - Menyelesaikan sistem persamaan linear dengan metode gauss, gauss-jordan, matriks balikan, dan cramer
 - Menentukan determinan dengan metode kofaktor dan reduksi
 - Menentukan invers matriks dengan metode adjoint dan OBE
-- Menyelesaikan interpolasi
-- Menyelesaikan regresi linear berganda
+- Melakukan interpolasi polinomial
+- Melakukan regresi linear berganda
+- Melakukan interpolasi bicubic spline
 - Resize image dengan interpolasi bicubic spline
 
 ## Cara menjalankan program
