@@ -77,7 +77,7 @@ public class Solution {
                 if (solution.matrix[currentRow][solution.col() - 1] != 0) result.append(String.format(" %f", solution.matrix[currentRow][solution.col() - 1]));
                 for (int free = leading + 1; free < solution.col() - 1; ++free) {
                     if (solution.matrix[currentRow][free] == 0) continue;
-                    result.append(String.format(" %fx_{%d} ", -solution.matrix[currentRow][free], free + 1));
+                    result.append(String.format(" %+fx_{%d} ", -solution.matrix[currentRow][free], free + 1));
                 }
                 result.append("\n");
             }
