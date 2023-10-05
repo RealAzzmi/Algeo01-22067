@@ -275,34 +275,36 @@ public class Menu {
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
                 Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                break;
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan lokasi file: ");
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
                 userInput.nextLine();
-                
                 String fileName = userInput.nextLine();
                 try {
+                    double x;
                     File inputFile = new File(fileName);
                     Scanner fileInput = new Scanner(new FileInputStream(inputFile));
                     while (fileInput.hasNextLine()) {
                         String line = fileInput.nextLine();
                         String[] elements = line.trim().split("\\s+");
+                        if(elements.length ==2){
                         double a = Double.parseDouble(elements[0]);
                         double b = Double.parseDouble(elements[1]);
-                        solverPolynom.addPoint(a, b);
-                    }
-                    String lastLine = fileInput.nextLine();
-                    String[] element = lastLine.trim().split("\\s+");
-                    double x = Double.parseDouble(element[0]);
-                    fileInput.close();
-                    solverPolynom.run();
+                        solverPolynom.addPoint(a, b);}
+                        else{
+                            x = Double.parseDouble(elements[0]);
+                            solverPolynom.run();
                     solverPolynom.print();
                     Solution solution = solverPolynom.approximate(x);
                     solution.print();
-
+                    Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                        }
+                        
+                    }
                 } catch (FileNotFoundException e) {
                     System.err.println("File tidak ditemukan " + e.getMessage());
-                }
+                }break;
             }
         }
     }
