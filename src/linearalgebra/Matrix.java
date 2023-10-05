@@ -18,10 +18,6 @@ public class Matrix {
         this.matrix = newMatrix;
     }
 
-    public void setMatrix(double[][] newMatrix) {
-        this.matrix = newMatrix;
-    }
-
     public int row() {
         return this.matrix.length;
     }
