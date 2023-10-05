@@ -295,10 +295,14 @@ public class Menu {
                         else{
                             x = Double.parseDouble(elements[0]);
                             solverPolynom.run();
-                    solverPolynom.print();
-                    Solution solution = solverPolynom.approximate(x);
-                    solution.print();
-                    Savetofile.saveResultToFile(solution.toString(), "../test/output");
+                            System.out.print("f(x) = ");
+                            solverPolynom.print();
+
+                            Solution solution = solverPolynom.approximate(x);
+                            System.out.print("Taksiran nilai f(x) = ");
+                            solution.print();
+                            System.out.println();
+                            Savetofile.saveResultToFile(solution.toString(), "../test/output");
                         }
                         
                     }
