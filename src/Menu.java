@@ -264,7 +264,7 @@ public class Menu {
                 int n = userInput.nextInt();
                 double x, y;
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i <= n; i++) {
                     x = userInput.nextDouble();
                     y = userInput.nextDouble();
                     solverPolynom.addPoint(x, y);
@@ -274,11 +274,12 @@ public class Menu {
                 solverPolynom.print();
                 Solution solution = solverPolynom.approximate(val);
                 solution.print();
+                Savetofile.saveResultToFile(solution.toString(), "../test/output");
             } else if (inputChoice == 2) {
                 System.out.print("Masukkan lokasi file: ");
                 PolynomialInterpolation solverPolynom = new PolynomialInterpolation();
                 userInput.nextLine();
-                double a, b;
+                
                 String fileName = userInput.nextLine();
                 try {
                     File inputFile = new File(fileName);
@@ -286,8 +287,8 @@ public class Menu {
                     while (fileInput.hasNextLine()) {
                         String line = fileInput.nextLine();
                         String[] elements = line.trim().split("\\s+");
-                        a = Double.parseDouble(elements[0]);
-                        b = Double.parseDouble(elements[1]);
+                        double a = Double.parseDouble(elements[0]);
+                        double b = Double.parseDouble(elements[1]);
                         solverPolynom.addPoint(a, b);
                     }
                     String lastLine = fileInput.nextLine();
@@ -446,6 +447,7 @@ public class Menu {
                 Bicubic.prepare();
                 double result = Bicubic.approximate(matrixCoeff, a, b);
                 System.out.println("Aproksimasinya: " + result);
+                Savetofile.saveResultToFile("Approksimasinya: "+ result, "../test/output");
             } catch (FileNotFoundException e) {
                 System.err.println("File tidak ditemukan " + e.getMessage());
             }
