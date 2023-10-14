@@ -60,6 +60,15 @@ public class Solution {
                 if (lastRow < 0)
                     continue;
 
+                boolean isLeading = true;
+                for (int i = 0; i < currentColumn; ++i) {
+                    if (solution.matrix[lastRow][i] != 0) {
+                        isLeading = false;
+                        break;
+                    }
+                }
+                if (!isLeading) continue;
+
                 for (int above = 0; above < lastRow; ++above) {
                     if (solution.matrix[above][currentColumn] == 0)
                         continue;
